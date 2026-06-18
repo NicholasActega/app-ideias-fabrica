@@ -18,7 +18,7 @@ body {
 .topo {
   width: 100%;
   background: white;
-  border-bottom: 1px solid #e3e6e8;
+  border-bottom: 1px solid #e0e0e0;
   text-align: center;
   padding: 18px;
   font-weight: bold;
@@ -51,7 +51,7 @@ body {
 /* CARD */
 .card {
   width: 90%;
-  max-width: 440px;
+  max-width: 450px;
   background: white;
   padding: 40px 30px;
   border-radius: 25px;
@@ -90,20 +90,16 @@ body {
 /* BOTÕES */
 .botao {
   width: 100%;
-  box-sizing: border-box;
   padding: 16px;
   border: none;
   border-radius: 14px;
   margin-top: 10px;
   color: white;
+  font-size: 15px;
 }
 
 .botao-principal {
   background: linear-gradient(135deg, #5fa8ff, #1c78c0);
-}
-
-.botao-principal:hover {
-  background: #1c78c0;
 }
 
 .botao-secundario {
@@ -120,7 +116,7 @@ body {
   flex-direction: column;
   gap: 12px;
   max-height: 350px;
-  overflow-y: auto; /* ✅ rolagem se necessário */
+  overflow-y: auto;
 }
 
 .item {
@@ -130,7 +126,6 @@ body {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  background: white;
 }
 
 .item.ativo {
@@ -160,16 +155,36 @@ body {
 <div id="login" class="card tela">
 
   <div class="logo">ACTION</div>
-
-  <div class="subtexto">
-    Identifique-se para iniciar o registro.
-  </div>
+  <div class="subtexto">Identifique-se para iniciar o registro.</div>
 
   <input class="input" id="matricula" placeholder="Matrícula">
   <input class="input" id="nome" placeholder="Nome completo">
 
   <button class="botao botao-principal" onclick="login()">Continuar</button>
   <button class="botao botao-secundario" onclick="mostrar('adminLogin')">Admin</button>
+
+</div>
+
+<!-- ADMIN -->
+<div id="adminLogin" class="card tela">
+
+  <h3>Admin</h3>
+
+  <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
+
+  <button class="botao botao-principal" onclick="loginAdmin()">Entrar</button>
+  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
+
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="card tela">
+
+  <h3>Dashboard</h3>
+
+  <div id="indicadores"></div>
+
+  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
 
 </div>
 
@@ -193,7 +208,42 @@ body {
 
   </div>
 
-  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
+
+</div>
+
+<!-- TIPO -->
+<div id="tipoTela" class="card tela">
+
+  <h3>Tipo de registro</h3>
+
+  <button class="botao botao-principal" onclick="definirTipo('Ideia')">💡 Ideia</button>
+  <button class="botao botao-principal" onclick="definirTipo('Risco')">⚠️ Risco</button>
+
+  <button class="botao voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
+
+</div>
+
+<!-- DESCRIÇÃO -->
+<div id="descricao" class="card tela">
+
+  <h3>Descreva</h3>
+
+  <textarea class="input" id="problema" placeholder="Problema"></textarea>
+  <textarea class="input" id="sugestao" placeholder="Sugestão"></textarea>
+
+  <button class="botao botao-principal" onclick="finalizar()">Enviar</button>
+  <button class="botao voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
+
+</div>
+
+<!-- FINAL -->
+<div id="final" class="card tela">
+
+  <h2>✅ Enviado!</h2>
+  <p>+10 pontos 🎉</p>
+
+  <button class="botao botao-principal" onclick="reiniciar()">Finalizar</button>
 
 </div>
 
@@ -201,31 +251,93 @@ body {
 
 <script>
 let dados = {};
+let tipo = "";
+let registros = JSON.parse(localStorage.getItem("registros")) || [];
 
+/* NAVEGAÇÃO + PROGRESSO */
 function mostrar(tela) {
   document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
   document.getElementById(tela).style.display = "block";
 
   let progresso = 20;
   if (tela === "setorTela") progresso = 40;
+  if (tela === "tipoTela") progresso = 60;
+  if (tela === "descricao") progresso = 80;
+  if (tela === "final") progresso = 100;
 
-  barraProgresso.style.width = progresso + "%";
+  document.getElementById("barraProgresso").style.width = progresso + "%";
 }
 
 mostrar("login");
 
+/* LOGIN */
 function login() {
   if (!matricula.value || !nome.value) {
     alert("Preencha tudo!");
     return;
   }
+  dados.matricula = matricula.value;
+  dados.nome = nome.value;
   mostrar("setorTela");
 }
 
+/* ADMIN */
+function loginAdmin() {
+  if (senhaAdmin.value === "admin123") {
+    gerarDashboard();
+    mostrar("dashboard");
+  } else {
+    alert("Senha incorreta");
+  }
+}
+
+/* DASHBOARD */
+function gerarDashboard() {
+  let total = registros.length;
+  let ideias = registros.filter(r => r.tipo === "Ideia").length;
+  let riscos = registros.filter(r => r.tipo === "Risco").length;
+
+  indicadores.innerHTML = `
+    <p>Total: ${total}</p>
+    <p>Ideias: ${ideias}</p>
+    <p>Riscos: ${riscos}</p>
+  `;
+}
+
+/* SETOR */
 function selecionarSetor(valor, el) {
   document.querySelectorAll(".item").forEach(i => i.classList.remove("ativo"));
   el.classList.add("ativo");
   dados.setor = valor;
+  setTimeout(() => mostrar("tipoTela"), 300);
+}
+
+/* TIPO */
+function definirTipo(t) {
+  tipo = t;
+  mostrar("descricao");
+}
+
+/* FINALIZAR */
+function finalizar() {
+  if (problema.value.length < 10 || sugestao.value.length < 10) {
+    alert("Descreva melhor o problema e a sugestão");
+    return;
+  }
+
+  registros.push({
+    nome: dados.nome,
+    setor: dados.setor,
+    tipo: tipo
+  });
+
+  localStorage.setItem("registros", JSON.stringify(registros));
+  mostrar("final");
+}
+
+/* RESET */
+function reiniciar() {
+  location.reload();
 }
 </script>
 
