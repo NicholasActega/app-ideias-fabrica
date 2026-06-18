@@ -128,10 +128,51 @@ body {
   cursor: pointer;
 }
 
-.item.ativo {
+/* ===================== */
+/* TELA TIPO REGISTRO */
+/* ===================== */
+
+.item-tipo {
+  padding: 18px;
+  border-radius: 16px;
+  border: 2px solid #d0d7de;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 12px;
+  background: white;
+}
+
+.item-tipo.ativo {
   border-color: #0078D4;
-  color: #0078D4;
+  background: #eef6ff;
+}
+
+/* ICONES */
+.conteudo {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.icone {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #eef2f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titulo {
   font-weight: bold;
+}
+
+.desc {
+  font-size: 13px;
+  color: #667;
 }
 
 /* TELAS */
@@ -167,25 +208,17 @@ body {
 
 <!-- ADMIN -->
 <div id="adminLogin" class="card tela">
-
   <h3>Admin</h3>
-
   <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
-
   <button class="botao botao-principal" onclick="loginAdmin()">Entrar</button>
   <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="card tela">
-
   <h3>Dashboard</h3>
-
   <div id="indicadores"></div>
-
   <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
 </div>
 
 <!-- SETOR -->
@@ -194,7 +227,6 @@ body {
   <h3>Setor:</h3>
 
   <div class="lista">
-
     <div class="item" onclick="selecionarSetor('ADM', this)">ADM <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Coatings ARA II', this)">Coatings ARA II <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Lab ARA I', this)">Lab ARA I <span>›</span></div>
@@ -205,20 +237,43 @@ body {
     <div class="item" onclick="selecionarSetor('PCP / Logística ARA II', this)">PCP / Logística ARA II <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Tintas', this)">Tintas <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Vedantes', this)">Vedantes <span>›</span></div>
-
   </div>
 
   <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
 
 </div>
 
-<!-- TIPO -->
+<!-- ✅ TIPO (NOVO VISUAL CORRETO) -->
 <div id="tipoTela" class="card tela">
 
-  <h3>Tipo de registro</h3>
+  <h3>Tipo de Registro</h3>
+  <div style="color:#667; margin-bottom:20px;">
+    Qual a natureza do seu apontamento?
+  </div>
 
-  <button class="botao botao-principal" onclick="definirTipo('Ideia')">💡 Ideia</button>
-  <button class="botao botao-principal" onclick="definirTipo('Risco')">⚠️ Risco</button>
+  <!-- SEGURANÇA -->
+  <div class="item-tipo" onclick="selecionarTipo('Risco', this)">
+    <div class="conteudo">
+      <div class="icone">🛡️</div>
+      <div>
+        <div class="titulo">Segurança</div>
+        <div class="desc">Registro de risco ou comportamento inseguro</div>
+      </div>
+    </div>
+    <span>›</span>
+  </div>
+
+  <!-- QUALIDADE -->
+  <div class="item-tipo" onclick="selecionarTipo('Ideia', this)">
+    <div class="conteudo">
+      <div class="icone">🏆</div>
+      <div>
+        <div class="titulo">Qualidade</div>
+        <div class="desc">Sugestão de melhoria ou otimização</div>
+      </div>
+    </div>
+    <span>›</span>
+  </div>
 
   <button class="botao voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
 
@@ -226,7 +281,6 @@ body {
 
 <!-- DESCRIÇÃO -->
 <div id="descricao" class="card tela">
-
   <h3>Descreva</h3>
 
   <textarea class="input" id="problema" placeholder="Problema"></textarea>
@@ -234,17 +288,12 @@ body {
 
   <button class="botao botao-principal" onclick="finalizar()">Enviar</button>
   <button class="botao voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
-
 </div>
 
 <!-- FINAL -->
 <div id="final" class="card tela">
-
   <h2>✅ Enviado!</h2>
-  <p>+10 pontos 🎉</p>
-
   <button class="botao botao-principal" onclick="reiniciar()">Finalizar</button>
-
 </div>
 
 </div>
@@ -254,7 +303,6 @@ let dados = {};
 let tipo = "";
 let registros = JSON.parse(localStorage.getItem("registros")) || [];
 
-/* NAVEGAÇÃO + PROGRESSO */
 function mostrar(tela) {
   document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
   document.getElementById(tela).style.display = "block";
@@ -265,7 +313,7 @@ function mostrar(tela) {
   if (tela === "descricao") progresso = 80;
   if (tela === "final") progresso = 100;
 
-  document.getElementById("barraProgresso").style.width = progresso + "%";
+  barraProgresso.style.width = progresso + "%";
 }
 
 mostrar("login");
@@ -293,15 +341,7 @@ function loginAdmin() {
 
 /* DASHBOARD */
 function gerarDashboard() {
-  let total = registros.length;
-  let ideias = registros.filter(r => r.tipo === "Ideia").length;
-  let riscos = registros.filter(r => r.tipo === "Risco").length;
-
-  indicadores.innerHTML = `
-    <p>Total: ${total}</p>
-    <p>Ideias: ${ideias}</p>
-    <p>Riscos: ${riscos}</p>
-  `;
+  indicadores.innerHTML = "Total registros: " + registros.length;
 }
 
 /* SETOR */
@@ -312,19 +352,20 @@ function selecionarSetor(valor, el) {
   setTimeout(() => mostrar("tipoTela"), 300);
 }
 
-/* TIPO */
-function definirTipo(t) {
-  tipo = t;
-  mostrar("descricao");
+/* ✅ TIPO */
+function selecionarTipo(valor, el) {
+  document.querySelectorAll(".item-tipo").forEach(i => i.classList.remove("ativo"));
+  el.classList.add("ativo");
+
+  tipo = valor;
+
+  setTimeout(() => {
+    mostrar("descricao");
+  }, 300);
 }
 
-/* FINALIZAR */
+/* FINAL */
 function finalizar() {
-  if (problema.value.length < 10 || sugestao.value.length < 10) {
-    alert("Descreva melhor o problema e a sugestão");
-    return;
-  }
-
   registros.push({
     nome: dados.nome,
     setor: dados.setor,
@@ -335,7 +376,6 @@ function finalizar() {
   mostrar("final");
 }
 
-/* RESET */
 function reiniciar() {
   location.reload();
 }
@@ -343,3 +383,4 @@ function reiniciar() {
 
 </body>
 </html>
+``
