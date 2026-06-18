@@ -48,12 +48,11 @@ body {
 /* CARD */
 .card {
   width: 90%;
-  max-width: 450px;
+  max-width: 460px;
   background: white;
   padding: 30px;
-  border-radius: 25px;
-  box-shadow: 0 12px 35px rgba(0,0,0,0.12);
-  box-sizing: border-box;
+  border-radius: 28px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
 }
 
 /* INPUT */
@@ -67,16 +66,19 @@ body {
   margin-bottom: 14px;
 }
 
-/* TEXTAREA */
+/* ✅ TEXTAREA AJUSTADO */
 .textarea {
   width: 100%;
-  padding: 16px;
+  height: 130px;
+  padding: 18px;
   background: #2c2c2c;
   color: white;
-  border-radius: 14px;
+  border-radius: 18px;
   border: none;
   margin-top: 10px;
-  min-height: 100px;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+  line-height: 1.4;
 }
 
 /* BOTÕES */
@@ -95,7 +97,7 @@ body {
 .secundario {
   background: linear-gradient(135deg,#8bbcf4,#5a95d6);
 }
-.voltar {
+.voltar-btn {
   background: #8a8a8a;
 }
 
@@ -122,7 +124,7 @@ body {
   color:#0078D4;
 }
 
-/* ✅ TIPO COMPLETO */
+/* TIPO */
 .item-tipo {
   padding:16px;
   border:2px solid #d0d7de;
@@ -164,20 +166,55 @@ body {
   color:#667;
 }
 
-/* INFO BOX */
+/* ✅ INFO MELHORADA */
 .info {
   background:#e6f0fe;
   border:1px solid #bcd2f7;
-  border-radius:10px;
-  padding:10px;
-  margin-bottom:15px;
+  border-radius:14px;
+  padding:15px;
+  margin-bottom:20px;
   font-size:13px;
+  color:#1c4d8c;
 }
 
+/* ✅ TITULOS */
+.titulo {
+  font-weight: bold;
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+
+/* ✅ SUPORTE */
+.suporte-box {
+  border:1px solid #d0d7de;
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:18px;
+}
+
+.suporte-texto {
+  font-size:12px;
+  color:#667;
+}
+
+/* FOOTER */
 .footer {
   display:flex;
   justify-content:space-between;
-  margin-top:20px;
+  align-items:center;
+  margin-top:25px;
+}
+
+.voltar-link {
+  color:#667;
+  cursor:pointer;
+}
+
+.botao-direita {
+  width:50%;
 }
 
 .tela {display:none;}
@@ -219,10 +256,10 @@ body {
     <div class="item" onclick="setorSel('Vedantes',this)">Vedantes ›</div>
   </div>
 
-  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+  <button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
 </div>
 
-<!-- ✅ TIPO CORRIGIDO -->
+<!-- TIPO -->
 <div id="tipo" class="card tela">
 
   <h3>Tipo de Registro</h3>
@@ -230,7 +267,6 @@ body {
     Qual a natureza do seu apontamento?
   </div>
 
-  <!-- SEGURANÇA -->
   <div class="item-tipo" onclick="tipoSel('Risco',this)">
     <div class="tipo-conteudo">
       <div class="tipo-icone">🛡️</div>
@@ -244,7 +280,6 @@ body {
     ›
   </div>
 
-  <!-- QUALIDADE -->
   <div class="item-tipo" onclick="tipoSel('Ideia',this)">
     <div class="tipo-conteudo">
       <div class="tipo-icone">🏆</div>
@@ -258,29 +293,39 @@ body {
     ›
   </div>
 
-  <button class="botao voltar" onclick="mostrar('setor')">Voltar</button>
+  <button class="botao voltar-btn" onclick="mostrar('setor')">Voltar</button>
 </div>
 
-<!-- DESCRIÇÃO -->
+<!-- ✅ DESCRIÇÃO PERFEITA -->
 <div id="descricao" class="card tela">
 
-<div class="info">
-<strong>Foco no Processo</strong><br>
-Não cite nomes de colaboradores.
-</div>
+  <div class="info">
+    <strong>Foco no Processo</strong><br>
+    Não cite nomes de colaboradores. Identifique riscos e oportunidades.
+  </div>
 
-<strong>Descrição:</strong>
-<textarea id="prob" class="textarea"></textarea>
+  <div class="titulo">Descrição / Ocorrido:</div>
+  <textarea id="prob" class="textarea"
+  placeholder="Descreva a situação (sem citar nomes), local e o que foi observado..."></textarea>
 
-<strong>Sugestão:</strong>
-<textarea id="sug" class="textarea"></textarea>
+  <div class="titulo">Ação realizada / Sugestão:</div>
+  <textarea id="sug" class="textarea"
+  placeholder="O que foi feito ou o que sugere para corrigir (foque na solução)..."></textarea>
 
-<label><input type="checkbox" id="suporte"> Precisa de suporte?</label>
+  <div class="suporte-box">
+    <div>
+      <strong>Precisa de ajuda ou suporte?</strong><br>
+      <span class="suporte-texto">
+        Encontrou algum problema complexo ou precisa de orientação?
+      </span>
+    </div>
+    <input type="checkbox" id="suporte">
+  </div>
 
-<div class="footer">
-<span onclick="mostrar('tipo')" style="cursor:pointer;color:#667;">Voltar</span>
-<button class="botao principal" onclick="finalizar()">Próximo</button>
-</div>
+  <div class="footer">
+    <span onclick="mostrar('tipo')" class="voltar-link">Voltar</span>
+    <button class="botao principal botao-direita" onclick="finalizar()">Próximo</button>
+  </div>
 
 </div>
 
@@ -294,14 +339,14 @@ Não cite nomes de colaboradores.
 <div id="admin" class="card tela">
 <input class="input" id="senha" placeholder="Senha">
 <button class="botao principal" onclick="admin()">Entrar</button>
-<button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+<button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
 </div>
 
 <!-- DASH -->
 <div id="dash" class="card tela">
 <h3>Dashboard</h3>
 <div id="dados"></div>
-<button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+<button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
 </div>
 
 </div>
@@ -373,4 +418,3 @@ dados.innerHTML='Total: '+registros.length;
 
 </body>
 </html>
-``
