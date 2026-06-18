@@ -8,7 +8,7 @@
 body {
   margin: 0;
   font-family: Arial;
-  background: #e5e7ea;
+  background: #f4f6f8; /* ✅ fundo mais claro */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,7 +17,8 @@ body {
 /* TOPO */
 .topo {
   width: 100%;
-  background: #d9d9d9;
+  background: white; /* ✅ branco */
+  border-bottom: 1px solid #e3e6e8; /* linha leve */
   text-align: center;
   padding: 18px;
   font-weight: bold;
@@ -28,12 +29,12 @@ body {
 /* BARRA */
 .barra-container {
   width: 100%;
-  height: 6px;
-  background: #cfd8e3;
+  height: 5px;
+  background: #dfe6ee;
 }
 
 .barra {
-  height: 6px;
+  height: 5px;
   width: 20%;
   background: #1c78c0;
   transition: width 0.4s ease;
@@ -49,18 +50,19 @@ body {
 
 /* CARD */
 .card {
-  width: 100%;
+  width: 90%;
   max-width: 440px;
   background: white;
-  padding: 45px 35px;
-  border-radius: 28px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  padding: 40px 30px;
+  border-radius: 25px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+  box-sizing: border-box;
 }
 
 /* LOGO */
 .logo {
   text-align: center;
-  font-size: 44px;
+  font-size: 42px;
   color: #1c78c0;
   font-style: italic;
   margin-bottom: 10px;
@@ -69,31 +71,50 @@ body {
 /* TEXTO */
 .subtexto {
   text-align: center;
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 15px;
+  color: #667;
+  margin-bottom: 25px;
 }
 
 /* INPUT */
 .input {
   width: 100%;
-  padding: 18px;
+  box-sizing: border-box;
+  padding: 16px;
   background: #2c2c2c;
   color: white;
   border: none;
   border-radius: 14px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-/* BOTÃO */
+/* BOTÕES BASE */
 .botao {
   width: 100%;
-  padding: 18px;
+  box-sizing: border-box;
+  padding: 16px;
   border: none;
-  background: #aab4bf;
-  color: white;
   border-radius: 14px;
-  margin-top: 12px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: white;
+}
+
+/* ✅ CONTINUAR */
+.botao-principal {
+  background: linear-gradient(135deg, #5fa8ff, #1c78c0);
+}
+
+.botao-principal:hover {
+  background: linear-gradient(135deg, #4a90e2, #1463a8);
+}
+
+/* ✅ ADMIN */
+.botao-secundario {
+  background: linear-gradient(135deg, #8bbcf4, #5a95d6);
+}
+
+.botao-secundario:hover {
+  background: linear-gradient(135deg, #6aa6ea, #3f7fc7);
 }
 
 /* VOLTAR */
@@ -133,6 +154,7 @@ body {
 <body>
 
 <div class="topo">ACTEGA</div>
+
 <div class="barra-container">
   <div id="barraProgresso" class="barra"></div>
 </div>
@@ -151,15 +173,16 @@ body {
   <input class="input" id="matricula" placeholder="Matrícula">
   <input class="input" id="nome" placeholder="Nome completo">
 
-  <button class="botao" onclick="login()">Continuar</button>
-  <button class="botao voltar" onclick="mostrar('adminLogin')">Admin</button>
+  <button class="botao botao-principal" onclick="login()">Continuar</button>
+  <button class="botao botao-secundario" onclick="mostrar('adminLogin')">Admin</button>
+
 </div>
 
 <!-- ADMIN -->
 <div id="adminLogin" class="card tela">
   <h3>Admin</h3>
   <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
-  <button class="botao" onclick="loginAdmin()">Entrar</button>
+  <button class="botao botao-principal" onclick="loginAdmin()">Entrar</button>
   <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
@@ -177,21 +200,19 @@ body {
 
   <div class="lista">
     <div class="item" onclick="selecionarSetor('ADM', this)">ADM <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Coatings', this)">Coatings <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Laboratório', this)">Laboratório <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Manutenção', this)">Manutenção <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Logística', this)">Logística <span>›</span></div>
     <div class="item" onclick="selecionarSetor('Tintas', this)">Tintas <span>›</span></div>
   </div>
 
   <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+
 </div>
 
 <!-- TIPO -->
 <div id="tipoTela" class="card tela">
   <h3>Tipo</h3>
-  <button class="botao" onclick="definirTipo('Ideia')">💡 Ideia</button>
-  <button class="botao" onclick="definirTipo('Risco')">⚠️ Risco</button>
+  <button class="botao botao-principal" onclick="definirTipo('Ideia')">💡 Ideia</button>
+  <button class="botao botao-principal" onclick="definirTipo('Risco')">⚠️ Risco</button>
   <button class="botao voltar" onclick="mostrar('setorTela')">Voltar</button>
 </div>
 
@@ -200,14 +221,14 @@ body {
   <h3>Descrição</h3>
   <textarea class="input" id="problema" placeholder="Problema"></textarea>
   <textarea class="input" id="sugestao" placeholder="Sugestão"></textarea>
-  <button class="botao" onclick="finalizar()">Enviar</button>
+  <button class="botao botao-principal" onclick="finalizar()">Enviar</button>
   <button class="botao voltar" onclick="mostrar('tipoTela')">Voltar</button>
 </div>
 
 <!-- FINAL -->
 <div id="final" class="card tela">
   <h2>✅ Enviado</h2>
-  <button class="botao" onclick="reiniciar()">Finalizar</button>
+  <button class="botao botao-principal" onclick="reiniciar()">Finalizar</button>
 </div>
 
 </div>
@@ -254,17 +275,14 @@ function loginAdmin() {
 
 // DASHBOARD
 function gerarDashboard() {
-  let total = registros.length;
-  indicadores.innerHTML = "Total registros: " + total;
+  indicadores.innerHTML = "Total: " + registros.length;
 }
 
 // SETOR
 function selecionarSetor(valor, el) {
   document.querySelectorAll(".item").forEach(i => i.classList.remove("ativo"));
   el.classList.add("ativo");
-
   dados.setor = valor;
-
   setTimeout(() => mostrar("tipoTela"), 300);
 }
 
