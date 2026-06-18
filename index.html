@@ -2,111 +2,188 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Sistema Melhoria Contínua</title>
+<title>ACTION - Melhoria Contínua</title>
 
 <style>
 body {
   font-family: Arial;
-  background: #f4f6f8;
-  text-align: center;
+  background: #e6eef7;
+  margin: 0;
 }
 
+/* HEADER */
+.header {
+  background: #0a2f5c;
+  color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 40px;
+}
+
+.titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* TELAS */
 .tela {
   display: none;
-  max-width: 700px;
+  max-width: 600px;
   margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
   margin-top: 20px;
 }
 
+/* CARDS */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+/* INPUTS */
 input, textarea, select {
   width: 100%;
-  margin: 8px 0;
-  padding: 12px;
+  padding: 15px;
+  font-size: 18px;
+  margin: 10px 0;
 }
 
+/* BOTÕES GRANDES */
 button {
-  padding: 12px;
+  width: 100%;
+  padding: 18px;
+  font-size: 18px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
   background: #0078D4;
   color: white;
-  border: none;
-  width: 100%;
-  margin-top: 10px;
-  cursor: pointer;
+  font-weight: bold;
 }
 
-.card {
-  background: #e9ecef;
-  padding: 10px;
+/* BOTÕES DIFERENTES */
+.btn-secundario {
+  background: #5a9bd5;
+}
+
+.btn-perigo {
+  background: #d9534f;
+}
+
+/* DASHBOARD */
+.card-info {
+  background: #0078D4;
+  color: white;
+  font-size: 18px;
   margin: 5px;
-  border-radius: 5px;
-  text-align: left;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+<div class="header">
+  <div class="titulo">ACTION</div>
+
+  <!-- 🔁 TROCAR PELO LOGO REAL -->
+  <img src="https://via.placeholder.com/120x40?text=LOGO" class="logo">
+</div>
+
+<!-- LOGIN -->
 <div id="login" class="tela">
-  <h2>Login Operador</h2>
-  <input id="matricula" placeholder="Matrícula">
-  <input id="nome" placeholder="Nome completo">
-  <button onclick="login()">Entrar</button>
-  <button onclick="suporte()">Preciso de Ajuda</button>
-  <hr>
-  <button onclick="mostrar('adminLogin')">Área do Admin</button>
+  <div class="card">
+    <h2>Login Operador</h2>
+    <input id="matricula" placeholder="Digite sua matrícula">
+    <input id="nome" placeholder="Nome completo">
+
+    <button onclick="login()">Entrar</button>
+    <button class="btn-secundario" onclick="suporte()">Preciso de Ajuda</button>
+
+    <hr>
+    <button class="btn-perigo" onclick="mostrar('adminLogin')">Admin</button>
+  </div>
 </div>
 
+<!-- ADMIN -->
 <div id="adminLogin" class="tela">
-  <h2>Admin</h2>
-  <input type="password" id="senhaAdmin" placeholder="Senha">
-  <button onclick="loginAdmin()">Entrar</button>
+  <div class="card">
+    <h2>Login Admin</h2>
+    <input type="password" id="senhaAdmin" placeholder="Senha">
+    <button onclick="loginAdmin()">Entrar</button>
+  </div>
 </div>
 
+<!-- DASHBOARD -->
 <div id="dashboard" class="tela">
-  <h2>📊 Dashboard</h2>
-  <div id="indicadores"></div>
+  <div class="card">
+    <h2>Dashboard</h2>
+    <div id="indicadores"></div>
+  </div>
 
-  <h3>Registros</h3>
-  <div id="listaRegistros"></div>
+  <div class="card">
+    <h3>Registros</h3>
+    <div id="listaRegistros"></div>
+  </div>
 
   <button onclick="voltarLogin()">Sair</button>
 </div>
 
+<!-- SETOR -->
 <div id="setorTela" class="tela">
-  <h2>Setor</h2>
-  <select id="setor">
-    <option>Tintas</option>
-    <option>Vernizes</option>
-    <option>Logística</option>
-    <option>Laboratório</option>
-    <option>ADM</option>
-    <option>PCP</option>
-    <option>Manutenção</option>
-  </select>
-  <button onclick="proximo('tipoTela')">Avançar</button>
+  <div class="card">
+    <h2>Selecione o setor</h2>
+    <select id="setor">
+      <option>Tintas</option>
+      <option>Vernizes</option>
+      <option>Logística</option>
+      <option>Laboratório</option>
+      <option>ADM</option>
+      <option>PCP</option>
+      <option>Manutenção</option>
+    </select>
+
+    <button onclick="proximo('tipoTela')">Avançar</button>
+  </div>
 </div>
 
+<!-- TIPO -->
 <div id="tipoTela" class="tela">
-  <h2>Tipo</h2>
-  <button onclick="definirTipo('Ideia')">💡 Ideia</button>
-  <button onclick="definirTipo('Risco')">⚠️ Risco</button>
+  <div class="card">
+    <h2>Escolha</h2>
+
+    <button onclick="definirTipo('Ideia')">💡 Ideia de Melhoria</button>
+    <button class="btn-perigo" onclick="definirTipo('Risco')">⚠️ Risco de Segurança</button>
+  </div>
 </div>
 
+<!-- DESCRIÇÃO -->
 <div id="descricao" class="tela">
-  <h2>Registro</h2>
-  <textarea id="problema" placeholder="Descreva o problema"></textarea>
-  <textarea id="sugestao" placeholder="Sugestão de melhoria"></textarea>
-  <input type="file" id="foto">
-  <button onclick="finalizar()">Enviar</button>
+  <div class="card">
+    <h2>Descreva</h2>
+
+    <textarea id="problema" placeholder="Descreva o problema"></textarea>
+    <textarea id="sugestao" placeholder="Sugestão de melhoria"></textarea>
+
+    <input type="file" id="foto">
+
+    <button onclick="finalizar()">Enviar</button>
+  </div>
 </div>
 
+<!-- FINAL -->
 <div id="final" class="tela">
-  <h2>✅ Enviado</h2>
-  <p>+10 pontos 🎉</p>
-  <button onclick="reiniciar()">Concluir</button>
+  <div class="card">
+    <h2>✅ Enviado!</h2>
+    <p>+10 pontos 🎉</p>
+    <button onclick="reiniciar()">Finalizar</button>
+  </div>
 </div>
 
 <script>
@@ -123,25 +200,25 @@ mostrar("login");
 
 // LOGIN
 function login() {
-  const matricula = document.getElementById("matricula").value;
-  const nome = document.getElementById("nome").value;
+  let m = matricula.value;
+  let n = nome.value;
 
-  if (!matricula || !nome) {
-    alert("Preencha tudo!");
+  if (!m || !n) {
+    alert("Preencha tudo");
     return;
   }
 
-  dados = { matricula, nome };
+  dados = { matricula: m, nome: n };
   mostrar("setorTela");
 }
 
 // ADMIN
 function loginAdmin() {
-  if (document.getElementById("senhaAdmin").value === "admin123") {
+  if (senhaAdmin.value === "admin123") {
     gerarDashboard();
     mostrar("dashboard");
   } else {
-    alert("Senha incorreta");
+    alert("Senha errada");
   }
 }
 
@@ -151,44 +228,27 @@ function gerarDashboard() {
   let ideias = registros.filter(r => r.tipo === "Ideia").length;
   let riscos = registros.filter(r => r.tipo === "Risco").length;
 
-  let ranking = {};
-
-  registros.forEach(r => {
-    ranking[r.nome] = (ranking[r.nome] || 0) + 10;
-  });
-
-  let html = `
-    <div class="card">Total: ${total}</div>
-    <div class="card">Ideias: ${ideias}</div>
-    <div class="card">Riscos: ${riscos}</div>
-    <h3>Ranking</h3>
+  indicadores.innerHTML = `
+    <div class="card-info">Total: ${total}</div>
+    <div class="card-info">Ideias: ${ideias}</div>
+    <div class="card-info">Riscos: ${riscos}</div>
   `;
-
-  for (let nome in ranking) {
-    html += `<div class="card">${nome}: ${ranking[nome]} pts</div>`;
-  }
-
-  document.getElementById("indicadores").innerHTML = html;
 
   let lista = "";
   registros.forEach(r => {
-    lista += `
-    <div class="card">
-      <b>${r.id}</b> | ${r.nome}<br>
-      Setor: ${r.setor}<br>
-      Tipo: ${r.tipo}<br>
-      Problema: ${r.problema}<br>
-      Sugestão: ${r.sugestao}<br>
-      Data: ${r.data}
+    lista += `<div class="card">
+      ${r.id} | ${r.nome}<br>
+      ${r.setor} - ${r.tipo}<br>
+      ${r.problema}
     </div>`;
   });
 
-  document.getElementById("listaRegistros").innerHTML = lista;
+  listaRegistros.innerHTML = lista;
 }
 
 // FLUXO
 function proximo(tela) {
-  dados.setor = document.getElementById("setor").value;
+  dados.setor = setor.value;
   mostrar(tela);
 }
 
@@ -197,56 +257,40 @@ function definirTipo(t) {
   mostrar("descricao");
 }
 
-// ✅ VALIDADOR INTELIGENTE
-function validarTexto(texto) {
-  const proibidas = ["teste", "abc", "123", "asdf", "aaaa"];
+// VALIDADOR
+function validarTexto(t) {
+  if (t.length < 15) return "Texto curto";
 
-  if (texto.length < 15) {
-    return "Texto muito curto.";
-  }
+  let palavras = ["problema", "melhor", "risco", "reduzir", "processo"];
+  let ok = palavras.some(p => t.toLowerCase().includes(p));
 
-  for (let p of proibidas) {
-    if (texto.toLowerCase().includes(p)) {
-      return "Texto inválido.";
-    }
-  }
-
-  const palavrasValidas = ["melhor", "problema", "reduzir", "aumentar", "risco", "processo"];
-  let valido = palavrasValidas.some(p => texto.toLowerCase().includes(p));
-
-  if (!valido) {
-    return "Descreva algo relacionado a melhoria ou problema.";
-  }
+  if (!ok) return "Descreva melhor o problema";
 
   return null;
 }
 
-// FINALIZAR COM FILTRO
+// FINALIZAR
 function finalizar() {
-  const problema = document.getElementById("problema").value;
-  const sugestao = document.getElementById("sugestao").value;
+  let p = problema.value;
+  let s = sugestao.value;
 
-  let erro1 = validarTexto(problema);
-  let erro2 = validarTexto(sugestao);
-
-  if (erro1) {
-    alert("Problema: " + erro1);
+  if (validarTexto(p)) {
+    alert("Problema inválido");
     return;
   }
 
-  if (erro2) {
-    alert("Sugestão: " + erro2);
+  if (validarTexto(s)) {
+    alert("Sugestão inválida");
     return;
   }
 
   let novo = {
     id: "ID-" + (registros.length + 1),
     nome: dados.nome,
-    matricula: dados.matricula,
     setor: dados.setor,
     tipo: tipo,
-    problema: problema,
-    sugestao: sugestao,
+    problema: p,
+    sugestao: s,
     data: new Date().toLocaleString()
   };
 
@@ -261,14 +305,15 @@ function reiniciar() {
   dados = {};
   tipo = "";
 
-  document.getElementById("matricula").value = "";
-  document.getElementById("nome").value = "";
-  document.getElementById("problema").value = "";
-  document.getElementById("sugestao").value = "";
+  matricula.value = "";
+  nome.value = "";
+  problema.value = "";
+  sugestao.value = "";
 
   mostrar("login");
 }
 
+// SUPORTE
 function suporte() {
   window.location.href = "mailto:SEUEMAIL@empresa.com";
 }
