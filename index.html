@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Sistema de Melhoria Contínua</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6f8;
+  text-align: center;
+}
+
+.tela {
+  display: none;
+  max-width: 700px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+input, textarea, select {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  background: #0078D4;
+  color: white;
+  border: none;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.card {
+  background: #e9ecef;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  text-align: left;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="tela">
+  <h2>Login Operador</h2>
+  <input id="matricula" placeholder="Matrícula">
+  <input id="nome" placeholder="Nome completo">
+  <button onclick="login()">Entrar</button>
+  <button onclick="suporte()">Preciso de Ajuda</button>
+
+  <hr>
+  <button onclick="mostrar('adminLogin')">Área do Admin</button>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="adminLogin" class="tela">
+  <h2>Admin</h2>
+  <input type="password" id="senhaAdmin" placeholder="Senha">
+  <button onclick="loginAdmin()">Entrar</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="tela">
+  <h2>📊 Dashboard CI</h2>
+  <div id="indicadores"></div>
+
+  <h3>📋 Registros</h3>
+  <div id="listaRegistros"></div>
+
+  <button onclick="voltarLogin()">Sair</button>
+</div>
+
+<!-- SETOR -->
+<div id="setorTela" class="tela">
+  <h2>Setor</h2>
+  <select id="setor">
+    <option>Tintas</option>
+    <option>Vernizes</option>
+    <option>Logística</option>
+    <option>Laboratório</option>
+    <option>ADM</option>
+    <option>PCP</option>
+    <option>Manutenção</option>
+  </select>
+  <button onclick="proximo('tipoTela')">Avançar</button>
+</div>
+
+<!-- TIPO -->
+<div id="tipoTela" class="tela">
+  <h2>Tipo</h2>
+  <button onclick="definirTipo('Ideia')">💡 Ideia</button>
+  <button onclick="definirTipo('Risco')">⚠️ Risco</button>
+</div>
+
+<!-- DESCRIÇÃO -->
+<div id="descricao" class="tela">
+  <h2>Registro</h2>
+  <textarea id="problema" placeholder="Problema"></textarea>
+  <textarea id="sugestao" placeholder="Sugestão"></textarea>
+  <input type="file" id="foto">
+  <button onclick="finalizar()">Enviar</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="tela">
+  <h2>✅ Enviado</h2>
+  <p>+10 pontos 🎉</p>
+  <button onclick="reiniciar()">Concluir</button>
+</div>
+
+<script>
+let dados = {};
+let tipo = "";
+let registros = JSON.parse(localStorage.getItem("registros")) || [];
+
+function mostrar(tela) {
+  document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
+  document.getElementById(tela).style.display = "block";
+}
+
+mostrar("login");
+
+// LOGIN
+function login() {
+  const matricula = document.getElementById("matricula").value;
+  const nome = document.getElementById("nome").value;
+
+  if (!matricula || !nome) {
+    alert("Preencha tudo!");
+    return;
+  }
+
+  dados = { matricula, nome };
+  mostrar("setorTela");
+}
+
+// ADMIN LOGIN
+function loginAdmin() {
+  if (document.getElementById("senhaAdmin").value === "admin123") {
+    gerarDashboard();
+    mostrar("dashboard");
+  } else {
+    alert("Senha incorreta");
+  }
+}
+
+// DASHBOARD
+function gerarDashboard() {
+  let total = registros.length;
+  let ideias = registros.filter(r => r.tipo === "Ideia").length;
+  let riscos = registros.filter(r => r.tipo === "Risco").length;
+
+  let ranking = {};
+
+  registros.forEach(r => {
+    ranking[r.nome] = (ranking[r.nome] || 0) + 10;
+  });
+
+  let html = `
+    <div class="card">Total: ${total}</div>
+    <div class="card">Ideias: ${ideias}</div>
+    <div class="card">Riscos: ${riscos}</div>
+    <h3>Ranking</h3>
+  `;
+
+  for (let nome in ranking) {
+    html += `<div class="card">${nome} - ${ranking[nome]} pts</div>`;
+  }
+
+  document.getElementById("indicadores").innerHTML = html;
+
+  let lista = "";
+  registros.forEach(r => {
+    lista += `
+      <div class="card">
+        <b>${r.id}</b> | ${r.nome} (${r.setor})<br>
+        Tipo: ${r.tipo}<br>
+        Problema: ${r.problema}<br>
+        Sugestão: ${r.sugestao}<br>
+        Data: ${r.data}
+      </div>
+    `;
+  });
+
+  document.getElementById("listaRegistros").innerHTML = lista;
+}
+
+// FLUXO
+function proximo(tela) {
+  if (tela === "tipoTela") {
+    dados.setor = document.getElementById("setor").value;
+  }
+  mostrar(tela);
+}
+
+function definirTipo(t) {
+  tipo = t;
+  mostrar("descricao");
+}
+
+// FINALIZAR
+function finalizar() {
+  const problema = document.getElementById("problema").value;
+  const sugestao = document.getElementById("sugestao").value;
+
+  if (!problema || !sugestao) {
+    alert("Preencha tudo!");
+    return;
+  }
+
+  let novo = {
+    id: "ID-" + (registros.length + 1),
+    nome: dados.nome,
+    matricula: dados.matricula,
+    setor: dados.setor,
+    tipo: tipo,
+    problema: problema,
+    sugestao: sugestao,
+    data: new Date().toLocaleString()
+  };
+
+  registros.push(novo);
+  localStorage.setItem("registros", JSON.stringify(registros));
+
+  mostrar("final");
+}
+
+// RESET
+function reiniciar() {
+  dados = {};
+  tipo = "";
+
+  document.getElementById("matricula").value = "";
+  document.getElementById("nome").value = "";
+  document.getElementById("problema").value = "";
+  document.getElementById("sugestao").value = "";
+  document.getElementById("foto").value = "";
+
+  mostrar("login");
+}
+
+function suporte() {
+  window.location.href = "mailto:SEUEMAIL@empresa.com";
+}
+
+function voltarLogin() {
+  mostrar("login");
+}
+</script>
+
+</body>
+</html>
