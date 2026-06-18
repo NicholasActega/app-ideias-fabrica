@@ -25,7 +25,7 @@ body {
   font-weight: bold;
 }
 
-/* ÁREA LOGO */
+/* LOGO */
 .logo-area {
   background: white;
   width: 100%;
@@ -82,6 +82,10 @@ button {
   background: #d9534f;
 }
 
+.btn-voltar {
+  background: #6c757d;
+}
+
 /* TELAS */
 .tela {
   display: none;
@@ -94,7 +98,7 @@ button {
 <div class="header">ACTION</div>
 
 <div class="logo-area">
-  <!-- COLE SEU LOGO AQUI -->
+  <!-- COLOQUE SEU LOGO AQUI -->
   <img src="https://via.placeholder.com/200x60?text=LOGO">
 </div>
 
@@ -115,13 +119,30 @@ button {
   </div>
 </div>
 
-<!-- ADMIN -->
+<!-- ADMIN LOGIN -->
 <div id="adminLogin" class="tela">
   <div class="card">
     <h2>Admin</h2>
     <input type="password" id="senhaAdmin" placeholder="Senha">
     <button onclick="loginAdmin()">Entrar</button>
+
+    <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
   </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="tela">
+  <div class="card">
+    <h2>📊 Dashboard</h2>
+    <div id="indicadores"></div>
+  </div>
+
+  <div class="card">
+    <h3>Registros</h3>
+    <div id="listaRegistros"></div>
+  </div>
+
+  <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
 </div>
 
 <!-- SETOR -->
@@ -139,6 +160,7 @@ button {
     </select>
 
     <button onclick="proximo('tipoTela')">Avançar</button>
+    <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
   </div>
 </div>
 
@@ -149,6 +171,8 @@ button {
 
     <button onclick="definirTipo('Ideia')">💡 Ideia</button>
     <button class="btn-danger" onclick="definirTipo('Risco')">⚠️ Risco</button>
+
+    <button class="btn-voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
   </div>
 </div>
 
@@ -163,6 +187,7 @@ button {
     <input type="file" id="foto">
 
     <button onclick="finalizar()">Enviar</button>
+    <button class="btn-voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
   </div>
 </div>
 
@@ -171,6 +196,7 @@ button {
   <div class="card">
     <h2>✅ Enviado!</h2>
     <p>+10 pontos 🎉</p>
+
     <button onclick="reiniciar()">Finalizar</button>
   </div>
 </div>
@@ -200,13 +226,38 @@ function login() {
   mostrar("setorTela");
 }
 
-// ADMIN
+// ADMIN LOGIN
 function loginAdmin() {
   if (senhaAdmin.value === "admin123") {
-    alert("Dashboard em breve 😉");
+    gerarDashboard();
+    mostrar("dashboard");
   } else {
-    alert("Senha errada");
+    alert("Senha incorreta");
   }
+}
+
+// DASHBOARD
+function gerarDashboard() {
+  let total = registros.length;
+  let ideias = registros.filter(r => r.tipo === "Ideia").length;
+  let riscos = registros.filter(r => r.tipo === "Risco").length;
+
+  indicadores.innerHTML = `
+    <div class="card">Total de envios: ${total}</div>
+    <div class="card">Ideias: ${ideias}</div>
+    <div class="card">Riscos: ${riscos}</div>
+  `;
+
+  let lista = "";
+  registros.forEach(r => {
+    lista += `<div class="card">
+      ${r.id} | ${r.nome}<br>
+      ${r.setor} - ${r.tipo}<br>
+      ${r.problema}
+    </div>`;
+  });
+
+  listaRegistros.innerHTML = lista;
 }
 
 // FLUXO
