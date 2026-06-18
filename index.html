@@ -6,199 +6,167 @@
 
 <style>
 body {
-  font-family: Arial;
   margin: 0;
-  background: #e6eef7;
+  font-family: Arial;
+  background: #e5e7ea;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* HEADER */
-.header {
-  background: #0a2f5c;
-  color: white;
+/* TOPO */
+.topo {
   width: 100%;
+  background: #dcdcdc;
   text-align: center;
   padding: 15px;
-  font-size: 28px;
   font-weight: bold;
+  color: #1c4d8c;
+  font-size: 22px;
 }
 
-/* LOGO */
-.logo-area {
-  background: white;
-  width: 100%;
-  text-align: center;
-  padding: 15px;
-}
-
-.logo-area img {
-  max-height: 60px;
-}
-
-/* CONTAINER */
+/* CARD CENTRAL */
 .container {
-  width: 95%;
-  max-width: 500px;
-  margin-top: 20px;
+  margin-top: 30px;
+  width: 90%;
+  max-width: 420px;
 }
 
-/* CARDS */
-.card {
+/* BOX */
+.box {
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 15px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.1);
+  padding: 25px;
 }
 
-/* INPUT */
-input, textarea, select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 15px;
-  font-size: 18px;
-  margin-top: 10px;
+/* LOGO TEXTO */
+.logo-action {
+  font-size: 36px;
+  color: #1c78c0;
+  font-style: italic;
+  text-align: center;
 }
 
-/* BOTÕES */
-button {
+/* TEXTO */
+.subtexto {
+  text-align: center;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* INPUT ESTILO DARK */
+.input {
   width: 100%;
-  padding: 18px;
-  font-size: 18px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  background: #0078D4;
+  background: #2b2b2b;
   color: white;
-  font-weight: bold;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 15px;
+  font-size: 16px;
 }
 
-.btn-sec {
-  background: #5a9bd5;
+/* BOTÃO */
+.botao {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background: #aab4bf;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
-.btn-danger {
-  background: #d9534f;
+/* BOTÃO ATIVO */
+.botao:hover {
+  background: #0078D4;
 }
 
-.btn-voltar {
-  background: #6c757d;
-}
-
-/* TELAS */
-.tela {
-  display: none;
+/* VOLTAR */
+.voltar {
+  margin-top: 10px;
+  background: #888;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">ACTION</div>
-
-<div class="logo-area">
-  <!-- COLOQUE SEU LOGO AQUI -->
-  <img src="https://via.placeholder.com/200x60?text=LOGO">
-</div>
+<div class="topo">ACTEGA</div>
 
 <div class="container">
 
 <!-- LOGIN -->
-<div id="login" class="tela">
-  <div class="card">
-    <h2>Login</h2>
-    <input id="matricula" placeholder="Matrícula">
-    <input id="nome" placeholder="Nome completo">
+<div id="login" class="box">
 
-    <button onclick="login()">Entrar</button>
-    <button class="btn-sec" onclick="suporte()">Preciso de Ajuda</button>
+  <div class="logo-action">ACTION</div>
 
-    <hr>
-    <button class="btn-danger" onclick="mostrar('adminLogin')">Admin</button>
-  </div>
-</div>
-
-<!-- ADMIN LOGIN -->
-<div id="adminLogin" class="tela">
-  <div class="card">
-    <h2>Admin</h2>
-    <input type="password" id="senhaAdmin" placeholder="Senha">
-    <button onclick="loginAdmin()">Entrar</button>
-
-    <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
-  </div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="tela">
-  <div class="card">
-    <h2>📊 Dashboard</h2>
-    <div id="indicadores"></div>
+  <div class="subtexto">
+    Identifique-se para iniciar o registro.
   </div>
 
-  <div class="card">
-    <h3>Registros</h3>
-    <div id="listaRegistros"></div>
-  </div>
+  <input class="input" id="matricula" placeholder="Matrícula">
 
-  <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
+  <input class="input" id="nome" placeholder="Nome completo">
+
+  <button class="botao" onclick="login()">Continuar</button>
+
 </div>
 
 <!-- SETOR -->
-<div id="setorTela" class="tela">
-  <div class="card">
-    <h2>Setor</h2>
-    <select id="setor">
-      <option>Tintas</option>
-      <option>Vernizes</option>
-      <option>Logística</option>
-      <option>Laboratório</option>
-      <option>ADM</option>
-      <option>PCP</option>
-      <option>Manutenção</option>
-    </select>
+<div id="setorTela" class="box" style="display:none;">
 
-    <button onclick="proximo('tipoTela')">Avançar</button>
-    <button class="btn-voltar" onclick="mostrar('login')">⬅ Voltar</button>
-  </div>
+  <h3>Selecione o setor</h3>
+
+  <select id="setor" class="input">
+    <option>Tintas</option>
+    <option>Vernizes</option>
+    <option>Logística</option>
+    <option>Laboratório</option>
+    <option>ADM</option>
+    <option>PCP</option>
+    <option>Manutenção</option>
+  </select>
+
+  <button class="botao" onclick="proximo('tipoTela')">Continuar</button>
+  <button class="botao voltar" onclick="voltar('login')">Voltar</button>
+
 </div>
 
 <!-- TIPO -->
-<div id="tipoTela" class="tela">
-  <div class="card">
-    <h2>Selecione</h2>
+<div id="tipoTela" class="box" style="display:none;">
 
-    <button onclick="definirTipo('Ideia')">💡 Ideia</button>
-    <button class="btn-danger" onclick="definirTipo('Risco')">⚠️ Risco</button>
+  <h3>Tipo de registro</h3>
 
-    <button class="btn-voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
-  </div>
+  <button class="botao" onclick="definirTipo('Ideia')">💡 Ideia</button>
+  <button class="botao" onclick="definirTipo('Risco')">⚠️ Risco</button>
+
+  <button class="botao voltar" onclick="voltar('setorTela')">Voltar</button>
+
 </div>
 
 <!-- DESCRIÇÃO -->
-<div id="descricao" class="tela">
-  <div class="card">
-    <h2>Descreva</h2>
+<div id="descricao" class="box" style="display:none;">
 
-    <textarea id="problema" placeholder="Problema"></textarea>
-    <textarea id="sugestao" placeholder="Sugestão"></textarea>
+  <h3>Descreva</h3>
 
-    <input type="file" id="foto">
+  <textarea class="input" id="problema" placeholder="Problema"></textarea>
+  <textarea class="input" id="sugestao" placeholder="Sugestão"></textarea>
 
-    <button onclick="finalizar()">Enviar</button>
-    <button class="btn-voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
-  </div>
+  <button class="botao" onclick="finalizar()">Enviar</button>
+  <button class="botao voltar" onclick="voltar('tipoTela')">Voltar</button>
+
 </div>
 
 <!-- FINAL -->
-<div id="final" class="tela">
-  <div class="card">
-    <h2>✅ Enviado!</h2>
-    <p>+10 pontos 🎉</p>
+<div id="final" class="box" style="display:none;">
 
-    <button onclick="reiniciar()">Finalizar</button>
-  </div>
+  <h2>✅ Enviado</h2>
+  <p>+10 pontos</p>
+
+  <button class="botao" onclick="reiniciar()">Finalizar</button>
+
 </div>
 
 </div>
@@ -206,64 +174,17 @@ button {
 <script>
 let dados = {};
 let tipo = "";
-let registros = JSON.parse(localStorage.getItem("registros")) || [];
 
-function mostrar(tela) {
-  document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
-  document.getElementById(tela).style.display = "block";
-}
-
-mostrar("login");
-
-// LOGIN
 function login() {
   if (!matricula.value || !nome.value) {
-    alert("Preencha tudo");
+    alert("Preencha os dados");
     return;
   }
 
-  dados = { matricula: matricula.value, nome: nome.value };
+  dados.matricula = matricula.value;
+  dados.nome = nome.value;
+
   mostrar("setorTela");
-}
-
-// ADMIN LOGIN
-function loginAdmin() {
-  if (senhaAdmin.value === "admin123") {
-    gerarDashboard();
-    mostrar("dashboard");
-  } else {
-    alert("Senha incorreta");
-  }
-}
-
-// DASHBOARD
-function gerarDashboard() {
-  let total = registros.length;
-  let ideias = registros.filter(r => r.tipo === "Ideia").length;
-  let riscos = registros.filter(r => r.tipo === "Risco").length;
-
-  indicadores.innerHTML = `
-    <div class="card">Total de envios: ${total}</div>
-    <div class="card">Ideias: ${ideias}</div>
-    <div class="card">Riscos: ${riscos}</div>
-  `;
-
-  let lista = "";
-  registros.forEach(r => {
-    lista += `<div class="card">
-      ${r.id} | ${r.nome}<br>
-      ${r.setor} - ${r.tipo}<br>
-      ${r.problema}
-    </div>`;
-  });
-
-  listaRegistros.innerHTML = lista;
-}
-
-// FLUXO
-function proximo(tela) {
-  dados.setor = setor.value;
-  mostrar(tela);
 }
 
 function definirTipo(t) {
@@ -271,47 +192,31 @@ function definirTipo(t) {
   mostrar("descricao");
 }
 
-// VALIDAÇÃO
-function validarTexto(t) {
-  if (t.length < 15) return true;
-  return false;
+function proximo(tela) {
+  dados.setor = setor.value;
+  mostrar(tela);
 }
 
-// FINALIZAR
 function finalizar() {
-  if (validarTexto(problema.value) || validarTexto(sugestao.value)) {
-    alert("Descreva melhor o problema e sugestão");
+  if (problema.value.length < 10) {
+    alert("Descreva melhor");
     return;
   }
-
-  let novo = {
-    id: "ID-" + (registros.length + 1),
-    nome: dados.nome,
-    setor: dados.setor,
-    tipo: tipo,
-    problema: problema.value,
-    sugestao: sugestao.value
-  };
-
-  registros.push(novo);
-  localStorage.setItem("registros", JSON.stringify(registros));
 
   mostrar("final");
 }
 
-// RESET
 function reiniciar() {
-  matricula.value = "";
-  nome.value = "";
-  problema.value = "";
-  sugestao.value = "";
-
-  mostrar("login");
+  location.reload();
 }
 
-// SUPORTE
-function suporte() {
-  window.location.href = "mailto:SEUEMAIL@empresa.com";
+function mostrar(tela) {
+  document.querySelectorAll(".box").forEach(t => t.style.display = "none");
+  document.getElementById(tela).style.display = "block";
+}
+
+function voltar(tela) {
+  mostrar(tela);
 }
 </script>
 
