@@ -2,59 +2,66 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>ACTION - Melhoria Contínua</title>
+<title>ACTION</title>
 
 <style>
 body {
   font-family: Arial;
-  background: #e6eef7;
   margin: 0;
+  background: #e6eef7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* HEADER */
 .header {
   background: #0a2f5c;
   color: white;
+  width: 100%;
+  text-align: center;
   padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  height: 40px;
-}
-
-.titulo {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
 }
 
-/* TELAS */
-.tela {
-  display: none;
-  max-width: 600px;
-  margin: auto;
+/* ÁREA LOGO */
+.logo-area {
+  background: white;
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+}
+
+.logo-area img {
+  max-height: 60px;
+}
+
+/* CONTAINER */
+.container {
+  width: 95%;
+  max-width: 500px;
   margin-top: 20px;
 }
 
 /* CARDS */
 .card {
   background: white;
-  border-radius: 12px;
   padding: 20px;
+  border-radius: 12px;
   margin-bottom: 15px;
 }
 
-/* INPUTS */
+/* INPUT */
 input, textarea, select {
   width: 100%;
+  box-sizing: border-box;
   padding: 15px;
   font-size: 18px;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
-/* BOTÕES GRANDES */
+/* BOTÕES */
 button {
   width: 100%;
   padding: 18px;
@@ -67,78 +74,60 @@ button {
   font-weight: bold;
 }
 
-/* BOTÕES DIFERENTES */
-.btn-secundario {
+.btn-sec {
   background: #5a9bd5;
 }
 
-.btn-perigo {
+.btn-danger {
   background: #d9534f;
 }
 
-/* DASHBOARD */
-.card-info {
-  background: #0078D4;
-  color: white;
-  font-size: 18px;
-  margin: 5px;
+/* TELAS */
+.tela {
+  display: none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="header">
-  <div class="titulo">ACTION</div>
+<div class="header">ACTION</div>
 
-  <!-- 🔁 TROCAR PELO LOGO REAL -->
-  <img src="https://via.placeholder.com/120x40?text=LOGO" class="logo">
+<div class="logo-area">
+  <!-- COLE SEU LOGO AQUI -->
+  <img src="https://via.placeholder.com/200x60?text=LOGO">
 </div>
+
+<div class="container">
 
 <!-- LOGIN -->
 <div id="login" class="tela">
   <div class="card">
-    <h2>Login Operador</h2>
-    <input id="matricula" placeholder="Digite sua matrícula">
+    <h2>Login</h2>
+    <input id="matricula" placeholder="Matrícula">
     <input id="nome" placeholder="Nome completo">
 
     <button onclick="login()">Entrar</button>
-    <button class="btn-secundario" onclick="suporte()">Preciso de Ajuda</button>
+    <button class="btn-sec" onclick="suporte()">Preciso de Ajuda</button>
 
     <hr>
-    <button class="btn-perigo" onclick="mostrar('adminLogin')">Admin</button>
+    <button class="btn-danger" onclick="mostrar('adminLogin')">Admin</button>
   </div>
 </div>
 
 <!-- ADMIN -->
 <div id="adminLogin" class="tela">
   <div class="card">
-    <h2>Login Admin</h2>
+    <h2>Admin</h2>
     <input type="password" id="senhaAdmin" placeholder="Senha">
     <button onclick="loginAdmin()">Entrar</button>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="tela">
-  <div class="card">
-    <h2>Dashboard</h2>
-    <div id="indicadores"></div>
-  </div>
-
-  <div class="card">
-    <h3>Registros</h3>
-    <div id="listaRegistros"></div>
-  </div>
-
-  <button onclick="voltarLogin()">Sair</button>
-</div>
-
 <!-- SETOR -->
 <div id="setorTela" class="tela">
   <div class="card">
-    <h2>Selecione o setor</h2>
+    <h2>Setor</h2>
     <select id="setor">
       <option>Tintas</option>
       <option>Vernizes</option>
@@ -156,10 +145,10 @@ button {
 <!-- TIPO -->
 <div id="tipoTela" class="tela">
   <div class="card">
-    <h2>Escolha</h2>
+    <h2>Selecione</h2>
 
-    <button onclick="definirTipo('Ideia')">💡 Ideia de Melhoria</button>
-    <button class="btn-perigo" onclick="definirTipo('Risco')">⚠️ Risco de Segurança</button>
+    <button onclick="definirTipo('Ideia')">💡 Ideia</button>
+    <button class="btn-danger" onclick="definirTipo('Risco')">⚠️ Risco</button>
   </div>
 </div>
 
@@ -168,8 +157,8 @@ button {
   <div class="card">
     <h2>Descreva</h2>
 
-    <textarea id="problema" placeholder="Descreva o problema"></textarea>
-    <textarea id="sugestao" placeholder="Sugestão de melhoria"></textarea>
+    <textarea id="problema" placeholder="Problema"></textarea>
+    <textarea id="sugestao" placeholder="Sugestão"></textarea>
 
     <input type="file" id="foto">
 
@@ -186,6 +175,8 @@ button {
   </div>
 </div>
 
+</div>
+
 <script>
 let dados = {};
 let tipo = "";
@@ -200,50 +191,22 @@ mostrar("login");
 
 // LOGIN
 function login() {
-  let m = matricula.value;
-  let n = nome.value;
-
-  if (!m || !n) {
+  if (!matricula.value || !nome.value) {
     alert("Preencha tudo");
     return;
   }
 
-  dados = { matricula: m, nome: n };
+  dados = { matricula: matricula.value, nome: nome.value };
   mostrar("setorTela");
 }
 
 // ADMIN
 function loginAdmin() {
   if (senhaAdmin.value === "admin123") {
-    gerarDashboard();
-    mostrar("dashboard");
+    alert("Dashboard em breve 😉");
   } else {
     alert("Senha errada");
   }
-}
-
-// DASHBOARD
-function gerarDashboard() {
-  let total = registros.length;
-  let ideias = registros.filter(r => r.tipo === "Ideia").length;
-  let riscos = registros.filter(r => r.tipo === "Risco").length;
-
-  indicadores.innerHTML = `
-    <div class="card-info">Total: ${total}</div>
-    <div class="card-info">Ideias: ${ideias}</div>
-    <div class="card-info">Riscos: ${riscos}</div>
-  `;
-
-  let lista = "";
-  registros.forEach(r => {
-    lista += `<div class="card">
-      ${r.id} | ${r.nome}<br>
-      ${r.setor} - ${r.tipo}<br>
-      ${r.problema}
-    </div>`;
-  });
-
-  listaRegistros.innerHTML = lista;
 }
 
 // FLUXO
@@ -257,30 +220,16 @@ function definirTipo(t) {
   mostrar("descricao");
 }
 
-// VALIDADOR
+// VALIDAÇÃO
 function validarTexto(t) {
-  if (t.length < 15) return "Texto curto";
-
-  let palavras = ["problema", "melhor", "risco", "reduzir", "processo"];
-  let ok = palavras.some(p => t.toLowerCase().includes(p));
-
-  if (!ok) return "Descreva melhor o problema";
-
-  return null;
+  if (t.length < 15) return true;
+  return false;
 }
 
 // FINALIZAR
 function finalizar() {
-  let p = problema.value;
-  let s = sugestao.value;
-
-  if (validarTexto(p)) {
-    alert("Problema inválido");
-    return;
-  }
-
-  if (validarTexto(s)) {
-    alert("Sugestão inválida");
+  if (validarTexto(problema.value) || validarTexto(sugestao.value)) {
+    alert("Descreva melhor o problema e sugestão");
     return;
   }
 
@@ -289,9 +238,8 @@ function finalizar() {
     nome: dados.nome,
     setor: dados.setor,
     tipo: tipo,
-    problema: p,
-    sugestao: s,
-    data: new Date().toLocaleString()
+    problema: problema.value,
+    sugestao: sugestao.value
   };
 
   registros.push(novo);
@@ -302,9 +250,6 @@ function finalizar() {
 
 // RESET
 function reiniciar() {
-  dados = {};
-  tipo = "";
-
   matricula.value = "";
   nome.value = "";
   problema.value = "";
@@ -316,10 +261,6 @@ function reiniciar() {
 // SUPORTE
 function suporte() {
   window.location.href = "mailto:SEUEMAIL@empresa.com";
-}
-
-function voltarLogin() {
-  mostrar("login");
 }
 </script>
 
