@@ -9,38 +9,35 @@ body {
   margin: 0;
   font-family: Arial;
   background: #f4f6f8;
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 /* TOPO */
 .topo {
-  width: 100%;
   background: white;
   border-bottom: 1px solid #e0e0e0;
   text-align: center;
   padding: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #1c4d8c;
-  font-size: 22px;
 }
 
 /* BARRA */
 .barra-container {
-  width: 100%;
   height: 5px;
   background: #dfe6ee;
 }
-
 .barra {
   height: 5px;
   width: 20%;
   background: #1c78c0;
-  transition: width 0.4s ease;
+  transition: 0.4s;
 }
 
-/* CENTRAL */
+/* CENTRO */
 .container {
   flex: 1;
   display: flex;
@@ -53,331 +50,270 @@ body {
   width: 90%;
   max-width: 450px;
   background: white;
-  padding: 40px 30px;
+  padding: 30px;
   border-radius: 25px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.12);
   box-sizing: border-box;
 }
 
-/* LOGO */
-.logo {
-  text-align: center;
-  font-size: 42px;
-  color: #1c78c0;
-  font-style: italic;
-  margin-bottom: 10px;
-}
-
-/* TEXTO */
-.subtexto {
-  text-align: center;
-  color: #667;
-  margin-bottom: 25px;
-}
-
 /* INPUT */
 .input {
   width: 100%;
-  box-sizing: border-box;
   padding: 16px;
   background: #2c2c2c;
   color: white;
   border: none;
   border-radius: 14px;
   margin-bottom: 14px;
+  box-sizing: border-box;
+}
+
+/* TEXTAREA */
+.textarea {
+  width: 100%;
+  padding: 16px;
+  background: #2c2c2c;
+  color: white;
+  border-radius: 14px;
+  border: none;
+  margin-top: 10px;
+  min-height: 100px;
+  box-sizing: border-box;
 }
 
 /* BOTÕES */
 .botao {
   width: 100%;
-  padding: 16px;
-  border: none;
+  padding: 15px;
   border-radius: 14px;
-  margin-top: 10px;
+  border: none;
   color: white;
-  font-size: 15px;
+  margin-top: 10px;
 }
 
-.botao-principal {
-  background: linear-gradient(135deg, #5fa8ff, #1c78c0);
+.principal {
+  background: linear-gradient(135deg,#5fa8ff,#1c78c0);
 }
-
-.botao-secundario {
-  background: linear-gradient(135deg, #8bbcf4, #5a95d6);
+.secundario {
+  background: linear-gradient(135deg,#8bbcf4,#5a95d6);
 }
-
 .voltar {
   background: #8a8a8a;
 }
 
-/* LISTA SETOR */
+/* LISTA */
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-height: 350px;
+  gap: 10px;
+  max-height: 300px;
   overflow-y: auto;
 }
-
 .item {
-  padding: 15px;
-  border: 2px solid #d0d7de;
+  padding: 14px;
+  border: 2px solid #ddd;
   border-radius: 12px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+}
+.item.ativo {
+  border-color:#0078D4;
+  color:#0078D4;
 }
 
-/* ===================== */
-/* TELA TIPO REGISTRO */
-/* ===================== */
-
+/* TIPO */
 .item-tipo {
-  padding: 18px;
-  border-radius: 16px;
-  border: 2px solid #d0d7de;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  margin-bottom: 12px;
-  background: white;
+  padding:16px;
+  border:2px solid #d0d7de;
+  border-radius:14px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
 }
-
 .item-tipo.ativo {
-  border-color: #0078D4;
-  background: #eef6ff;
+  border-color:#0078D4;
+  background:#eef6ff;
 }
 
-/* ICONES */
-.conteudo {
-  display: flex;
-  gap: 15px;
-  align-items: center;
+/* INFO BOX */
+.info {
+  background:#e6f0fe;
+  border:1px solid #bcd2f7;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:15px;
+  font-size:13px;
 }
 
-.icone {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: #eef2f7;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.footer {
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
 }
 
-.titulo {
-  font-weight: bold;
-}
-
-.desc {
-  font-size: 13px;
-  color: #667;
-}
-
-/* TELAS */
-.tela {
-  display: none;
-}
+.tela {display:none;}
 </style>
 </head>
 
 <body>
 
 <div class="topo">ACTEGA</div>
-
-<div class="barra-container">
-  <div id="barraProgresso" class="barra"></div>
-</div>
+<div class="barra-container"><div id="barra" class="barra"></div></div>
 
 <div class="container">
 
 <!-- LOGIN -->
 <div id="login" class="card tela">
-
-  <div class="logo">ACTION</div>
-  <div class="subtexto">Identifique-se para iniciar o registro.</div>
+  <h2 style="text-align:center;">ACTION</h2>
 
   <input class="input" id="matricula" placeholder="Matrícula">
-  <input class="input" id="nome" placeholder="Nome completo">
+  <input class="input" id="nome" placeholder="Nome">
 
-  <button class="botao botao-principal" onclick="login()">Continuar</button>
-  <button class="botao botao-secundario" onclick="mostrar('adminLogin')">Admin</button>
-
-</div>
-
-<!-- ADMIN -->
-<div id="adminLogin" class="card tela">
-  <h3>Admin</h3>
-  <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
-  <button class="botao botao-principal" onclick="loginAdmin()">Entrar</button>
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="card tela">
-  <h3>Dashboard</h3>
-  <div id="indicadores"></div>
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
+  <button class="botao principal" onclick="login()">Continuar</button>
+  <button class="botao secundario" onclick="mostrar('admin')">Admin</button>
 </div>
 
 <!-- SETOR -->
-<div id="setorTela" class="card tela">
-
-  <h3>Setor:</h3>
-
+<div id="setor" class="card tela">
+  <h3>Setor</h3>
   <div class="lista">
-    <div class="item" onclick="selecionarSetor('ADM', this)">ADM <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Coatings ARA II', this)">Coatings ARA II <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Lab ARA I', this)">Lab ARA I <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Lab ARA II', this)">Lab ARA II <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Manutenção ARA I', this)">Manutenção ARA I <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Manutenção ARA II', this)">Manutenção ARA II <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('PCP / Logística ARA I', this)">PCP / Logística ARA I <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('PCP / Logística ARA II', this)">PCP / Logística ARA II <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Tintas', this)">Tintas <span>›</span></div>
-    <div class="item" onclick="selecionarSetor('Vedantes', this)">Vedantes <span>›</span></div>
+
+    <div class="item" onclick="setorSel('ADM',this)">ADM ›</div>
+    <div class="item" onclick="setorSel('Coatings ARA II',this)">Coatings ARA II ›</div>
+    <div class="item" onclick="setorSel('Lab ARA I',this)">Lab ARA I ›</div>
+    <div class="item" onclick="setorSel('Lab ARA II',this)">Lab ARA II ›</div>
+    <div class="item" onclick="setorSel('Manutenção ARA I',this)">Manutenção ARA I ›</div>
+    <div class="item" onclick="setorSel('Manutenção ARA II',this)">Manutenção ARA II ›</div>
+
   </div>
 
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
+  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
-<!-- ✅ TIPO (NOVO VISUAL CORRETO) -->
-<div id="tipoTela" class="card tela">
-
+<!-- TIPO -->
+<div id="tipo" class="card tela">
   <h3>Tipo de Registro</h3>
-  <div style="color:#667; margin-bottom:20px;">
-    Qual a natureza do seu apontamento?
+
+  <div class="item-tipo" onclick="tipoSel('Risco',this)">
+    Segurança ›
   </div>
 
-  <!-- SEGURANÇA -->
-  <div class="item-tipo" onclick="selecionarTipo('Risco', this)">
-    <div class="conteudo">
-      <div class="icone">🛡️</div>
-      <div>
-        <div class="titulo">Segurança</div>
-        <div class="desc">Registro de risco ou comportamento inseguro</div>
-      </div>
-    </div>
-    <span>›</span>
+  <div class="item-tipo" onclick="tipoSel('Ideia',this)">
+    Qualidade ›
   </div>
 
-  <!-- QUALIDADE -->
-  <div class="item-tipo" onclick="selecionarTipo('Ideia', this)">
-    <div class="conteudo">
-      <div class="icone">🏆</div>
-      <div>
-        <div class="titulo">Qualidade</div>
-        <div class="desc">Sugestão de melhoria ou otimização</div>
-      </div>
-    </div>
-    <span>›</span>
-  </div>
-
-  <button class="botao voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
-
+  <button class="botao voltar" onclick="mostrar('setor')">Voltar</button>
 </div>
 
 <!-- DESCRIÇÃO -->
 <div id="descricao" class="card tela">
-  <h3>Descreva</h3>
 
-  <textarea class="input" id="problema" placeholder="Problema"></textarea>
-  <textarea class="input" id="sugestao" placeholder="Sugestão"></textarea>
+<div class="info">
+<strong>Foco no Processo</strong><br>
+Não cite nomes de colaboradores.
+</div>
 
-  <button class="botao botao-principal" onclick="finalizar()">Enviar</button>
-  <button class="botao voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
+<strong>Descrição:</strong>
+<textarea id="prob" class="textarea"></textarea>
+
+<strong>Sugestão:</strong>
+<textarea id="sug" class="textarea"></textarea>
+
+<label><input type="checkbox" id="suporte"> Precisa de suporte?</label>
+
+<div class="footer">
+<span onclick="mostrar('tipo')" style="cursor:pointer;color:#667;">Voltar</span>
+<button class="botao principal" onclick="finalizar()">Próximo</button>
+</div>
+
 </div>
 
 <!-- FINAL -->
 <div id="final" class="card tela">
-  <h2>✅ Enviado!</h2>
-  <button class="botao botao-principal" onclick="reiniciar()">Finalizar</button>
+<h2>✅ Enviado</h2>
+<button class="botao principal" onclick="reset()">OK</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="card tela">
+<input class="input" id="senha" placeholder="Senha">
+<button class="botao principal" onclick="admin()">Entrar</button>
+<button class="botao voltar" onclick="mostrar('login')">Voltar</button>
+</div>
+
+<!-- DASH -->
+<div id="dash" class="card tela">
+<h3>Dashboard</h3>
+<div id="dados"></div>
+<button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
 </div>
 
 <script>
-let dados = {};
-let tipo = "";
-let registros = JSON.parse(localStorage.getItem("registros")) || [];
+let dados={}; let tipo='';
+let registros=JSON.parse(localStorage.getItem("registros"))||[];
 
-function mostrar(tela) {
-  document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
-  document.getElementById(tela).style.display = "block";
+function mostrar(t){
+document.querySelectorAll('.tela').forEach(e=>e.style.display='none');
+document.getElementById(t).style.display='block';
 
-  let progresso = 20;
-  if (tela === "setorTela") progresso = 40;
-  if (tela === "tipoTela") progresso = 60;
-  if (tela === "descricao") progresso = 80;
-  if (tela === "final") progresso = 100;
-
-  barraProgresso.style.width = progresso + "%";
+let p=20;
+if(t=='setor')p=40;
+if(t=='tipo')p=60;
+if(t=='descricao')p=80;
+if(t=='final')p=100;
+barra.style.width=p+'%';
 }
 
-mostrar("login");
+mostrar('login');
 
-/* LOGIN */
-function login() {
-  if (!matricula.value || !nome.value) {
-    alert("Preencha tudo!");
-    return;
-  }
-  dados.matricula = matricula.value;
-  dados.nome = nome.value;
-  mostrar("setorTela");
+function login(){
+if(!matricula.value||!nome.value) return alert('Preencha!');
+dados.nome=nome.value;
+mostrar('setor');
 }
 
-/* ADMIN */
-function loginAdmin() {
-  if (senhaAdmin.value === "admin123") {
-    gerarDashboard();
-    mostrar("dashboard");
-  } else {
-    alert("Senha incorreta");
-  }
+function setorSel(v,e){
+document.querySelectorAll('.item').forEach(i=>i.classList.remove('ativo'));
+e.classList.add('ativo');
+dados.setor=v;
+setTimeout(()=>mostrar('tipo'),300);
 }
 
-/* DASHBOARD */
-function gerarDashboard() {
-  indicadores.innerHTML = "Total registros: " + registros.length;
+function tipoSel(v,e){
+document.querySelectorAll('.item-tipo').forEach(i=>i.classList.remove('ativo'));
+e.classList.add('ativo');
+tipo=v;
+setTimeout(()=>mostrar('descricao'),300);
 }
 
-/* SETOR */
-function selecionarSetor(valor, el) {
-  document.querySelectorAll(".item").forEach(i => i.classList.remove("ativo"));
-  el.classList.add("ativo");
-  dados.setor = valor;
-  setTimeout(() => mostrar("tipoTela"), 300);
+function finalizar(){
+let sup=suporte.checked;
+
+registros.push({nome:dados.nome,setor:dados.setor,tipo:tipo,suporte:sup});
+localStorage.setItem("registros",JSON.stringify(registros));
+
+if(sup){
+window.location.href="mailto:SEUEMAIL@empresa.com";
 }
 
-/* ✅ TIPO */
-function selecionarTipo(valor, el) {
-  document.querySelectorAll(".item-tipo").forEach(i => i.classList.remove("ativo"));
-  el.classList.add("ativo");
-
-  tipo = valor;
-
-  setTimeout(() => {
-    mostrar("descricao");
-  }, 300);
+mostrar('final');
 }
 
-/* FINAL */
-function finalizar() {
-  registros.push({
-    nome: dados.nome,
-    setor: dados.setor,
-    tipo: tipo
-  });
+function reset(){location.reload();}
 
-  localStorage.setItem("registros", JSON.stringify(registros));
-  mostrar("final");
+function admin(){
+if(senha.value==="admin123"){
+dadosDash();
+mostrar('dash');
+}else alert('Senha errada');
 }
 
-function reiniciar() {
-  location.reload();
+function dadosDash(){
+dados.innerHTML='Total: '+registros.length;
 }
 </script>
 
