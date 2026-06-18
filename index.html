@@ -25,6 +25,20 @@ body {
   font-size: 22px;
 }
 
+/* BARRA */
+.barra-container {
+  width: 100%;
+  height: 6px;
+  background: #cfd8e3;
+}
+
+.barra {
+  height: 6px;
+  width: 20%;
+  background: #1c78c0;
+  transition: width 0.4s ease;
+}
+
 /* CENTRAL */
 .container {
   flex: 1;
@@ -60,29 +74,15 @@ body {
   font-size: 15px;
 }
 
-/* INPUT COM ÍCONE */
-.input-group {
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.input-group span {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
-}
-
+/* INPUT */
 .input {
   width: 100%;
-  padding: 18px 18px 18px 45px;
+  padding: 18px;
   background: #2c2c2c;
   color: white;
   border: none;
   border-radius: 14px;
-  font-size: 16px;
-  box-sizing: border-box;
+  margin-bottom: 16px;
 }
 
 /* BOTÃO */
@@ -90,25 +90,37 @@ body {
   width: 100%;
   padding: 18px;
   border: none;
-  background: #c0c7cf;
+  background: #aab4bf;
   color: white;
   border-radius: 14px;
-  font-size: 16px;
   margin-top: 12px;
-  transition: 0.3s;
 }
 
-.botao-ativo {
-  background: #0078D4;
+/* VOLTAR */
+.voltar {
+  background: #8a8a8a;
+}
+
+/* LISTA SETOR */
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.item {
+  padding: 15px;
+  border: 2px solid #d0d7de;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
   cursor: pointer;
 }
 
-.botao-ativo:hover {
-  background: #005fa3;
-}
-
-.voltar {
-  background: #8a8a8a;
+.item.ativo {
+  border-color: #0078D4;
+  color: #0078D4;
+  font-weight: bold;
 }
 
 /* TELAS */
@@ -121,6 +133,9 @@ body {
 <body>
 
 <div class="topo">ACTEGA</div>
+<div class="barra-container">
+  <div id="barraProgresso" class="barra"></div>
+</div>
 
 <div class="container">
 
@@ -133,101 +148,66 @@ body {
     Identifique-se para iniciar o registro.
   </div>
 
-  <div class="input-group">
-    <span>👤</span>
-    <input class="input" id="matricula" placeholder="Matrícula" oninput="validarLogin()">
-  </div>
+  <input class="input" id="matricula" placeholder="Matrícula">
+  <input class="input" id="nome" placeholder="Nome completo">
 
-  <div class="input-group">
-    <span>✍️</span>
-    <input class="input" id="nome" placeholder="Nome completo" oninput="validarLogin()">
-  </div>
-
-  <button id="btnLogin" class="botao" onclick="login()" disabled>Continuar</button>
-
+  <button class="botao" onclick="login()">Continuar</button>
   <button class="botao voltar" onclick="mostrar('adminLogin')">Admin</button>
-
 </div>
 
 <!-- ADMIN -->
 <div id="adminLogin" class="card tela">
-
-  <h3>Área Administrativa</h3>
-
-  <div class="input-group">
-    <span>🔒</span>
-    <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
-  </div>
-
-  <button class="botao botao-ativo" onclick="loginAdmin()">Entrar</button>
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
+  <h3>Admin</h3>
+  <input class="input" id="senhaAdmin" type="password" placeholder="Senha">
+  <button class="botao" onclick="loginAdmin()">Entrar</button>
+  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="card tela">
-
-  <h3>📊 Dashboard</h3>
-
+  <h3>Dashboard</h3>
   <div id="indicadores"></div>
-
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
+  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
 <!-- SETOR -->
 <div id="setorTela" class="card tela">
 
-  <h3>Selecione o setor</h3>
+  <h3>Setor:</h3>
 
-  <select id="setor" class="input">
-    <option>Tintas</option>
-    <option>Vernizes</option>
-    <option>Logística</option>
-    <option>Laboratório</option>
-    <option>ADM</option>
-    <option>PCP</option>
-    <option>Manutenção</option>
-  </select>
+  <div class="lista">
+    <div class="item" onclick="selecionarSetor('ADM', this)">ADM <span>›</span></div>
+    <div class="item" onclick="selecionarSetor('Coatings', this)">Coatings <span>›</span></div>
+    <div class="item" onclick="selecionarSetor('Laboratório', this)">Laboratório <span>›</span></div>
+    <div class="item" onclick="selecionarSetor('Manutenção', this)">Manutenção <span>›</span></div>
+    <div class="item" onclick="selecionarSetor('Logística', this)">Logística <span>›</span></div>
+    <div class="item" onclick="selecionarSetor('Tintas', this)">Tintas <span>›</span></div>
+  </div>
 
-  <button class="botao botao-ativo" onclick="proximo()">Continuar</button>
-  <button class="botao voltar" onclick="mostrar('login')">⬅ Voltar</button>
-
+  <button class="botao voltar" onclick="mostrar('login')">Voltar</button>
 </div>
 
 <!-- TIPO -->
 <div id="tipoTela" class="card tela">
-
-  <h3>Tipo de registro</h3>
-
-  <button class="botao botao-ativo" onclick="definirTipo('Ideia')">💡 Ideia</button>
-  <button class="botao botao-ativo" onclick="definirTipo('Risco')">⚠️ Risco</button>
-
-  <button class="botao voltar" onclick="mostrar('setorTela')">⬅ Voltar</button>
-
+  <h3>Tipo</h3>
+  <button class="botao" onclick="definirTipo('Ideia')">💡 Ideia</button>
+  <button class="botao" onclick="definirTipo('Risco')">⚠️ Risco</button>
+  <button class="botao voltar" onclick="mostrar('setorTela')">Voltar</button>
 </div>
 
 <!-- DESCRIÇÃO -->
 <div id="descricao" class="card tela">
-
-  <h3>Descreva</h3>
-
+  <h3>Descrição</h3>
   <textarea class="input" id="problema" placeholder="Problema"></textarea>
   <textarea class="input" id="sugestao" placeholder="Sugestão"></textarea>
-
-  <button class="botao botao-ativo" onclick="finalizar()">Enviar</button>
-  <button class="botao voltar" onclick="mostrar('tipoTela')">⬅ Voltar</button>
-
+  <button class="botao" onclick="finalizar()">Enviar</button>
+  <button class="botao voltar" onclick="mostrar('tipoTela')">Voltar</button>
 </div>
 
 <!-- FINAL -->
 <div id="final" class="card tela">
-
   <h2>✅ Enviado</h2>
-  <p>+10 pontos</p>
-
-  <button class="botao botao-ativo" onclick="reiniciar()">Finalizar</button>
-
+  <button class="botao" onclick="reiniciar()">Finalizar</button>
 </div>
 
 </div>
@@ -240,25 +220,24 @@ let registros = JSON.parse(localStorage.getItem("registros")) || [];
 function mostrar(tela) {
   document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
   document.getElementById(tela).style.display = "block";
+
+  let progresso = 20;
+  if (tela === "setorTela") progresso = 40;
+  if (tela === "tipoTela") progresso = 60;
+  if (tela === "descricao") progresso = 80;
+  if (tela === "final") progresso = 100;
+
+  barraProgresso.style.width = progresso + "%";
 }
 
 mostrar("login");
 
-// 🔵 valida botão ativar
-function validarLogin() {
-  const btn = document.getElementById("btnLogin");
-
-  if (matricula.value && nome.value) {
-    btn.disabled = false;
-    btn.classList.add("botao-ativo");
-  } else {
-    btn.disabled = true;
-    btn.classList.remove("botao-ativo");
-  }
-}
-
 // LOGIN
 function login() {
+  if (!matricula.value || !nome.value) {
+    alert("Preencha tudo!");
+    return;
+  }
   dados = { matricula: matricula.value, nome: nome.value };
   mostrar("setorTela");
 }
@@ -276,43 +255,33 @@ function loginAdmin() {
 // DASHBOARD
 function gerarDashboard() {
   let total = registros.length;
-  let ideias = registros.filter(r => r.tipo === "Ideia").length;
-  let riscos = registros.filter(r => r.tipo === "Risco").length;
-
-  indicadores.innerHTML = `
-    <p>Total: ${total}</p>
-    <p>Ideias: ${ideias}</p>
-    <p>Riscos: ${riscos}</p>
-  `;
+  indicadores.innerHTML = "Total registros: " + total;
 }
 
-// FLUXO
-function proximo() {
-  dados.setor = setor.value;
-  mostrar("tipoTela");
+// SETOR
+function selecionarSetor(valor, el) {
+  document.querySelectorAll(".item").forEach(i => i.classList.remove("ativo"));
+  el.classList.add("ativo");
+
+  dados.setor = valor;
+
+  setTimeout(() => mostrar("tipoTela"), 300);
 }
 
+// TIPO
 function definirTipo(t) {
   tipo = t;
   mostrar("descricao");
 }
 
+// FINALIZAR
 function finalizar() {
-  if (problema.value.length < 10 || sugestao.value.length < 10) {
-    alert("Descreva melhor");
-    return;
-  }
-
-  registros.push({
-    nome: dados.nome,
-    setor: dados.setor,
-    tipo: tipo
-  });
-
+  registros.push({ nome: dados.nome, setor: dados.setor, tipo: tipo });
   localStorage.setItem("registros", JSON.stringify(registros));
   mostrar("final");
 }
 
+// RESET
 function reiniciar() {
   location.reload();
 }
@@ -320,4 +289,3 @@ function reiniciar() {
 
 </body>
 </html>
-``
