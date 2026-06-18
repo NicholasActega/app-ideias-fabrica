@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Sistema de Melhoria Contínua</title>
+<title>Sistema Melhoria Contínua</title>
 
 <style>
 body {
@@ -24,11 +24,11 @@ body {
 input, textarea, select {
   width: 100%;
   margin: 8px 0;
-  padding: 10px;
+  padding: 12px;
 }
 
 button {
-  padding: 10px;
+  padding: 12px;
   background: #0078D4;
   color: white;
   border: none;
@@ -49,37 +49,32 @@ button {
 
 <body>
 
-<!-- LOGIN -->
 <div id="login" class="tela">
   <h2>Login Operador</h2>
   <input id="matricula" placeholder="Matrícula">
   <input id="nome" placeholder="Nome completo">
   <button onclick="login()">Entrar</button>
   <button onclick="suporte()">Preciso de Ajuda</button>
-
   <hr>
   <button onclick="mostrar('adminLogin')">Área do Admin</button>
 </div>
 
-<!-- ADMIN LOGIN -->
 <div id="adminLogin" class="tela">
   <h2>Admin</h2>
   <input type="password" id="senhaAdmin" placeholder="Senha">
   <button onclick="loginAdmin()">Entrar</button>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dashboard" class="tela">
-  <h2>📊 Dashboard CI</h2>
+  <h2>📊 Dashboard</h2>
   <div id="indicadores"></div>
 
-  <h3>📋 Registros</h3>
+  <h3>Registros</h3>
   <div id="listaRegistros"></div>
 
   <button onclick="voltarLogin()">Sair</button>
 </div>
 
-<!-- SETOR -->
 <div id="setorTela" class="tela">
   <h2>Setor</h2>
   <select id="setor">
@@ -94,23 +89,20 @@ button {
   <button onclick="proximo('tipoTela')">Avançar</button>
 </div>
 
-<!-- TIPO -->
 <div id="tipoTela" class="tela">
   <h2>Tipo</h2>
   <button onclick="definirTipo('Ideia')">💡 Ideia</button>
   <button onclick="definirTipo('Risco')">⚠️ Risco</button>
 </div>
 
-<!-- DESCRIÇÃO -->
 <div id="descricao" class="tela">
   <h2>Registro</h2>
-  <textarea id="problema" placeholder="Problema"></textarea>
-  <textarea id="sugestao" placeholder="Sugestão"></textarea>
+  <textarea id="problema" placeholder="Descreva o problema"></textarea>
+  <textarea id="sugestao" placeholder="Sugestão de melhoria"></textarea>
   <input type="file" id="foto">
   <button onclick="finalizar()">Enviar</button>
 </div>
 
-<!-- FINAL -->
 <div id="final" class="tela">
   <h2>✅ Enviado</h2>
   <p>+10 pontos 🎉</p>
@@ -143,7 +135,7 @@ function login() {
   mostrar("setorTela");
 }
 
-// ADMIN LOGIN
+// ADMIN
 function loginAdmin() {
   if (document.getElementById("senhaAdmin").value === "admin123") {
     gerarDashboard();
@@ -173,7 +165,7 @@ function gerarDashboard() {
   `;
 
   for (let nome in ranking) {
-    html += `<div class="card">${nome} - ${ranking[nome]} pts</div>`;
+    html += `<div class="card">${nome}: ${ranking[nome]} pts</div>`;
   }
 
   document.getElementById("indicadores").innerHTML = html;
@@ -181,14 +173,14 @@ function gerarDashboard() {
   let lista = "";
   registros.forEach(r => {
     lista += `
-      <div class="card">
-        <b>${r.id}</b> | ${r.nome} (${r.setor})<br>
-        Tipo: ${r.tipo}<br>
-        Problema: ${r.problema}<br>
-        Sugestão: ${r.sugestao}<br>
-        Data: ${r.data}
-      </div>
-    `;
+    <div class="card">
+      <b>${r.id}</b> | ${r.nome}<br>
+      Setor: ${r.setor}<br>
+      Tipo: ${r.tipo}<br>
+      Problema: ${r.problema}<br>
+      Sugestão: ${r.sugestao}<br>
+      Data: ${r.data}
+    </div>`;
   });
 
   document.getElementById("listaRegistros").innerHTML = lista;
@@ -196,9 +188,7 @@ function gerarDashboard() {
 
 // FLUXO
 function proximo(tela) {
-  if (tela === "tipoTela") {
-    dados.setor = document.getElementById("setor").value;
-  }
+  dados.setor = document.getElementById("setor").value;
   mostrar(tela);
 }
 
@@ -207,13 +197,45 @@ function definirTipo(t) {
   mostrar("descricao");
 }
 
-// FINALIZAR
+// ✅ VALIDADOR INTELIGENTE
+function validarTexto(texto) {
+  const proibidas = ["teste", "abc", "123", "asdf", "aaaa"];
+
+  if (texto.length < 15) {
+    return "Texto muito curto.";
+  }
+
+  for (let p of proibidas) {
+    if (texto.toLowerCase().includes(p)) {
+      return "Texto inválido.";
+    }
+  }
+
+  const palavrasValidas = ["melhor", "problema", "reduzir", "aumentar", "risco", "processo"];
+  let valido = palavrasValidas.some(p => texto.toLowerCase().includes(p));
+
+  if (!valido) {
+    return "Descreva algo relacionado a melhoria ou problema.";
+  }
+
+  return null;
+}
+
+// FINALIZAR COM FILTRO
 function finalizar() {
   const problema = document.getElementById("problema").value;
   const sugestao = document.getElementById("sugestao").value;
 
-  if (!problema || !sugestao) {
-    alert("Preencha tudo!");
+  let erro1 = validarTexto(problema);
+  let erro2 = validarTexto(sugestao);
+
+  if (erro1) {
+    alert("Problema: " + erro1);
+    return;
+  }
+
+  if (erro2) {
+    alert("Sugestão: " + erro2);
     return;
   }
 
@@ -243,7 +265,6 @@ function reiniciar() {
   document.getElementById("nome").value = "";
   document.getElementById("problema").value = "";
   document.getElementById("sugestao").value = "";
-  document.getElementById("foto").value = "";
 
   mostrar("login");
 }
