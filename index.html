@@ -55,7 +55,7 @@ body {
   box-shadow: 0 15px 40px rgba(0,0,0,0.12);
 }
 
-/* ✅ INPUT (ÚNICA ALTERAÇÃO) */
+/* INPUT */
 .input {
   width: 100%;
   padding: 16px;
@@ -64,7 +64,6 @@ body {
   border: none;
   border-radius: 14px;
   margin-bottom: 14px;
-  box-sizing: border-box; /* ✅ ADICIONADO */
 }
 
 /* ✅ TEXTAREA AJUSTADO */
@@ -240,5 +239,182 @@ body {
   <button class="botao secundario" onclick="mostrar('admin')">Admin</button>
 </div>
 
-<!-- TODO O RESTO DO SEU HTML CONTINUA EXATAMENTE IGUAL -->
-``
+<!-- SETOR -->
+<div id="setor" class="card tela">
+  <h3>Setor</h3>
+
+  <div class="lista">
+    <div class="item" onclick="setorSel('ADM',this)">ADM ›</div>
+    <div class="item" onclick="setorSel('Coatings ARA II',this)">Coatings ARA II ›</div>
+    <div class="item" onclick="setorSel('Lab ARA I',this)">Lab ARA I ›</div>
+    <div class="item" onclick="setorSel('Lab ARA II',this)">Lab ARA II ›</div>
+    <div class="item" onclick="setorSel('Manutenção ARA I',this)">Manutenção ARA I ›</div>
+    <div class="item" onclick="setorSel('Manutenção ARA II',this)">Manutenção ARA II ›</div>
+    <div class="item" onclick="setorSel('PCP / Logística ARA I',this)">PCP / Logística ARA I ›</div>
+    <div class="item" onclick="setorSel('PCP / Logística ARA II',this)">PCP / Logística ARA II ›</div>
+    <div class="item" onclick="setorSel('Tintas',this)">Tintas ›</div>
+    <div class="item" onclick="setorSel('Vedantes',this)">Vedantes ›</div>
+  </div>
+
+  <button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+</div>
+
+<!-- TIPO -->
+<div id="tipo" class="card tela">
+
+  <h3>Tipo de Registro</h3>
+  <div style="color:#667;margin-bottom:15px;">
+    Qual a natureza do seu apontamento?
+  </div>
+
+  <div class="item-tipo" onclick="tipoSel('Risco',this)">
+    <div class="tipo-conteudo">
+      <div class="tipo-icone">🛡️</div>
+      <div>
+        <div class="tipo-titulo">Segurança</div>
+        <div class="tipo-desc">
+          Registro de comportamento inseguro ou condição de risco.
+        </div>
+      </div>
+    </div>
+    ›
+  </div>
+
+  <div class="item-tipo" onclick="tipoSel('Ideia',this)">
+    <div class="tipo-conteudo">
+      <div class="tipo-icone">🏆</div>
+      <div>
+        <div class="tipo-titulo">Qualidade</div>
+        <div class="tipo-desc">
+          Sugestões de melhoria de processo, produto ou rotina.
+        </div>
+      </div>
+    </div>
+    ›
+  </div>
+
+  <button class="botao voltar-btn" onclick="mostrar('setor')">Voltar</button>
+</div>
+
+<!-- ✅ DESCRIÇÃO PERFEITA -->
+<div id="descricao" class="card tela">
+
+  <div class="info">
+    <strong>Foco no Processo</strong><br>
+    Não cite nomes de colaboradores. Identifique riscos e oportunidades.
+  </div>
+
+  <div class="titulo">Descrição / Ocorrido:</div>
+  <textarea id="prob" class="textarea"
+  placeholder="Descreva a situação (sem citar nomes), local e o que foi observado..."></textarea>
+
+  <div class="titulo">Ação realizada / Sugestão:</div>
+  <textarea id="sug" class="textarea"
+  placeholder="O que foi feito ou o que sugere para corrigir (foque na solução)..."></textarea>
+
+  <div class="suporte-box">
+    <div>
+      <strong>Precisa de ajuda ou suporte?</strong><br>
+      <span class="suporte-texto">
+        Encontrou algum problema complexo ou precisa de orientação?
+      </span>
+    </div>
+    <input type="checkbox" id="suporte">
+  </div>
+
+  <div class="footer">
+    <span onclick="mostrar('tipo')" class="voltar-link">Voltar</span>
+    <button class="botao principal botao-direita" onclick="finalizar()">Próximo</button>
+  </div>
+
+</div>
+
+<!-- FINAL -->
+<div id="final" class="card tela">
+<h2>✅ Enviado</h2>
+<button class="botao principal" onclick="reset()">OK</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="card tela">
+<input class="input" id="senha" placeholder="Senha">
+<button class="botao principal" onclick="admin()">Entrar</button>
+<button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+</div>
+
+<!-- DASH -->
+<div id="dash" class="card tela">
+<h3>Dashboard</h3>
+<div id="dados"></div>
+<button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+</div>
+
+</div>
+
+<script>
+let dados={}; let tipo='';
+let registros=JSON.parse(localStorage.getItem("registros"))||[];
+
+function mostrar(t){
+document.querySelectorAll('.tela').forEach(e=>e.style.display='none');
+document.getElementById(t).style.display='block';
+
+let p=20;
+if(t=='setor')p=40;
+if(t=='tipo')p=60;
+if(t=='descricao')p=80;
+if(t=='final')p=100;
+barra.style.width=p+'%';
+}
+
+mostrar('login');
+
+function login(){
+if(!matricula.value||!nome.value) return alert('Preencha!');
+dados.nome=nome.value;
+mostrar('setor');
+}
+
+function setorSel(v,e){
+document.querySelectorAll('.item').forEach(i=>i.classList.remove('ativo'));
+e.classList.add('ativo');
+dados.setor=v;
+setTimeout(()=>mostrar('tipo'),300);
+}
+
+function tipoSel(v,e){
+document.querySelectorAll('.item-tipo').forEach(i=>i.classList.remove('ativo'));
+e.classList.add('ativo');
+tipo=v;
+setTimeout(()=>mostrar('descricao'),300);
+}
+
+function finalizar(){
+let sup=suporte.checked;
+
+registros.push({nome:dados.nome,setor:dados.setor,tipo:tipo,suporte:sup});
+localStorage.setItem("registros",JSON.stringify(registros));
+
+if(sup){
+window.location.href="mailto:SEUEMAIL@empresa.com";
+}
+
+mostrar('final');
+}
+
+function reset(){location.reload();}
+
+function admin(){
+if(senha.value==="admin123"){
+dadosDash();
+mostrar('dash');
+}else alert('Senha errada');
+}
+
+function dadosDash(){
+dados.innerHTML='Total: '+registros.length;
+}
+</script>
+
+</body>
+</html>  
