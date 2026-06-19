@@ -544,44 +544,9 @@ function admin(){
 ``
 
 function dadosDash(){
+  document.getElementById("resumo").innerHTML = "JS funcionando ✅";
+}
 
-  let total = registros.length;
-  let ideias = registros.filter(r => r.tipo === "Ideia").length;
-  let riscos = registros.filter(r => r.tipo === "Risco").length;
-  let suporte = registros.filter(r => r.suporte).length;
-
-  // resumo
-  document.getElementById("resumo").innerHTML = `
-    <strong>Total:</strong> ${total}<br>
-    💡 Ideias: ${ideias}<br>
-    ⚠️ Riscos: ${riscos}<br>
-    🚨 Suporte: ${suporte}
-  `;
-
-  // lista detalhada
-  let html = "";
-
-  registros.slice().reverse().forEach(r => {
-
-    html += `
-      <div class="registro ${r.suporte ? 'suporte' : ''}">
-        <div class="registro-topo">
-          <span>${r.nome}</span>
-          ${r.suporte ? '<span class="tag tag-suporte">SUPORTE</span>' : ''}
-        </div>
-
-        <div class="registro-info">
-          Setor: ${r.setor}
-        </div>
-
-        <div style="margin-top:6px;">
-          <span class="tag ${r.tipo === 'Ideia' ? 'tag-ideia' : 'tag-risco'}">
-            ${r.tipo}
-          </span>
-        </div>
-      </div>
-    `;
-  });
 
   document.getElementById("lista-registros").innerHTML = html;
 }
