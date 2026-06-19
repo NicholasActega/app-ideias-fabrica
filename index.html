@@ -1,1 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>ACTION</title>
 
+<style>
+/* ===== RESET / BASE ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.tela {
+  display: none;
+}
+
+/* ===== TOPO ===== */
+.topo {
+  background: white;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+  padding: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #1c4d8c;
+}
+
+/* ===== BARRA ===== */
+.barra-container {
+  height: 5px;
+  background: #dfe6ee;
+}
+.barra {
+  height: 5px;
+  width: 20%;
+  background: #1c78c0;
+  transition: width 0.4s;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ===== CARD ===== */
+.card {
+  width: 90%;
+  max-width: 460px;
+  background: white;
+  padding: 30px;
+  border-radius: 28px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+  /* ===== INPUTS ===== */
+.input {
+  width: 100%;
+  padding: 16px;
+  background: #2c2c2c;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-sizing: border-box;
+}
+
+.textarea {
+  width: 100%;
+  height: 130px;
+  padding: 18px;
+  background: #2c2c2c;
+  color: white;
+  border-radius: 18px;
+  border: none;
+  margin-top: 10px;
+  margin-bottom: 18px;
+  box-sizing: border-box;
+  line-height: 1.4;
+}
+
+/* ===== BOTÕES ===== */
+.botao {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  border: none;
+  color: white;
+  margin-top: 10px;
+}
+
+.principal {
+  background: linear-gradient(135deg,#5fa8ff,#1c78c0);
+}
+
+.secundario {
+  background: linear-gradient(135deg,#8bbcf4,#5a95d6);
+}
+
+.voltar-btn {
+  background: #8a8a8a;
+}
+
+/* ===== LOGO ===== */
+.logo-action {
+  text-align: center;
+  font-size: 48px;
+  font-style: italic;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1c78c0;
+  letter-spacing: 1px;
+}
+
+.logo-action span {
+  color: #4fa3e3;
+}
+
+/* ===== FINALIZA CSS ===== */
+</style>
+</head>
+
+</head>
+
+<body>
+
+<div class="topo">ACTEGA</div>
+<div class="barra-container">
+  <div id="barra" class="barra"></div>
+</div>
+
+<div class="container">
+
+  <!-- LOGIN -->
+  <div id="login" class="card tela">
+    <div class="logo-action">
+      AC<span>T</span>ion
+    </div>
+
+    <input class="input" id="matricula" placeholder="Matrícula">
+    <input class="input" id="nome" placeholder="Nome">
+
+    <button class="botao principal" onclick="login()">Continuar</button>
+    <button class="botao secundario" onclick="mostrar('admin')">Admin</button>
+  </div>
+
+  <!-- SETOR -->
+  <div id="setor" class="card tela">
+    <h3>Setor</h3>
+
+    <div class="lista">
+      <div class="item" onclick="setorSel('ADM',this)">ADM ›</div>
+      <div class="item" onclick="setorSel('Coatings ARA II',this)">Coatings ARA II ›</div>
+      <div class="item" onclick="setorSel('Lab ARA I',this)">Lab ARA I ›</div>
+      <div class="item" onclick="setorSel('Lab ARA II',this)">Lab ARA II ›</div>
+      <div class="item" onclick="setorSel('Manutenção ARA I',this)">Manutenção ARA I ›</div>
+      <div class="item" onclick="setorSel('Manutenção ARA II',this)">Manutenção ARA II ›</div>
+      <div class="item" onclick="setorSel('PCP / Logística ARA I',this)">PCP / Logística ARA I ›</div>
+      <div class="item" onclick="setorSel('PCP / Logística ARA II',this)">PCP / Logística ARA II ›</div>
+      <div class="item" onclick="setorSel('Tintas',this)">Tintas ›</div>
+      <div class="item" onclick="setorSel('Vedantes',this)">Vedantes ›</div>
+    </div>
+
+    <button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+  </div>
+
+  <!-- TIPO -->
+  <div id="tipo" class="card tela">
+    <h3>Tipo de Registro</h3>
+    <div style="color:#667;margin-bottom:15px;">
+      Qual a natureza do seu apontamento?
+    </div>
+
+    <div class="item-tipo" onclick="tipoSel('Risco',this)">
+      <div class="tipo-conteudo">
+        <div class="tipo-icone">🛡️</div>
+        <div>
+          <div class="tipo-titulo">Segurança</div>
+          <div class="tipo-desc">
+            Registro de comportamento inseguro ou condição de risco.
+          </div>
+        </div>
+      </div>
+      ›
+    </div>
+
+    <div class="item-tipo" onclick="tipoSel('Ideia',this)">
+      <div class="tipo-conteudo">
+        <div class="tipo-icone">🏆</div>
+        <div>
+          <div class="tipo-titulo">Qualidade</div>
+          <div class="tipo-desc">
+            Sugestões de melhoria de processo, produto ou rotina.
+          </div>
+        </div>
+      </div>
+      ›
+    </div>
+
+    <button class="botao voltar-btn" onclick="mostrar('setor')">Voltar</button>
+  </div>
+
+  <!-- DESCRIÇÃO -->
+  <div id="descricao" class="card tela">
+
+    <div class="info">
+      <strong>Foco no Processo</strong><br>
+      Não cite nomes de colaboradores.
+    </div>
+
+    <div class="titulo">Descrição / Ocorrido:</div>
+    <textarea id="prob" class="textarea"></textarea>
+
+    <div class="titulo">Ação realizada / Sugestão:</div>
+    <textarea id="sug" class="textarea"></textarea>
+
+    <div class="suporte-box">
+      <div>
+        <strong>Precisa de ajuda ou suporte?</strong><br>
+        <span class="suporte-texto">
+          Marque se alguém da equipe deve entrar em contato.
+        </span>
+      </div>
+      <input type="checkbox" id="suporte">
+    </div>
+
+    <div class="footer">
+      <span class="voltar-link" onclick="mostrar('tipo')">Voltar</span>
+      <button class="botao principal botao-direita" onclick="finalizar()">Próximo</button>
+    </div>
+
+  </div>
+
+  <!-- FINAL -->
+  <div id="final" class="card tela">
+    <div class="final-container">
+
+      <div class="check-area">
+        <div class="check-circle">✅</div>
+      </div>
+
+      <div class="final-title">Relatório Enviado!</div>
+      <div class="final-sub">
+        Obrigado por contribuir com a ACTEGA.
+      </div>
+
+      <button class="botao-final" onclick="reset()">
+        🏠 Voltar ao Início
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ADMIN -->
+  <div id="admin" class="card tela">
+    <input class="input" id="senha" placeholder="Senha">
+    <button class="botao principal" onclick="admin()">Entrar</button>
+    <button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+  </div>
+
+  <!-- DASH -->
+  <div id="dash" class="card tela">
+    <h3>Dashboard</h3>
+
+    <div id="resumo"></div>
+    <div id="lista-registros"></div>
+
+    <button class="botao voltar-btn" onclick="mostrar('login')">Voltar</button>
+  </div>
+
+</div>
+<script>
+/* ===== VARIÁVEIS ===== */
+let dados = {};
+let tipo = "";
+let registros = JSON.parse(localStorage.getItem("registros")) || [];
+
+/* ===== NAVEGAÇÃO ===== */
+function mostrar(tela) {
+  document.querySelectorAll(".tela").forEach(t => t.style.display = "none");
+  document.getElementById(tela).style.display = "block";
+
+  let progresso = 20;
+  if (tela === "setor") progresso = 40;
+  if (tela === "tipo") progresso = 60;
+  if (tela === "descricao") progresso = 80;
+  if (tela === "final") progresso = 100;
+
+  document.getElementById("barra").style.width = progresso + "%";
+}
+
+/* ===== INÍCIO ===== */
+mostrar("login");
+
+/* ===== LOGIN ===== */
+function login() {
+  if (!matricula.value || !nome.value) {
+    alert("Preencha matrícula e nome");
+    return;
+  }
+  dados.nome = nome.value;
+  mostrar("setor");
+}
+
+/* ===== SETOR ===== */
+function setorSel(valor, el) {
+  document.querySelectorAll(".item").forEach(i => i.classList.remove("ativo"));
+  el.classList.add("ativo");
+  dados.setor = valor;
+  setTimeout(() => mostrar("tipo"), 300);
+}
+
+/* ===== TIPO ===== */
+function tipoSel(valor, el) {
+  document.querySelectorAll(".item-tipo").forEach(i => i.classList.remove("ativo"));
+  el.classList.add("ativo");
+  tipo = valor;
+  setTimeout(() => mostrar("descricao"), 300);
+}
+
+/* ===== FINALIZAR ===== */
+function finalizar() {
+  registros.push({
+    nome: dados.nome,
+    setor: dados.setor,
+    tipo: tipo,
+    suporte: suporte.checked
+  });
+
+  localStorage.setItem("registros", JSON.stringify(registros));
+  mostrar("final");
+}
+
+/* ===== RESET ===== */
+function reset() {
+  location.reload();
+}
+
+/* ===== ADMIN ===== */
+function admin() {
+  if (senha.value === "admin123") {
+    mostrar("dash");
+    dadosDash();
+  } else {
+    alert("Senha errada");
+  }
+}
+</script>
