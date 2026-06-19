@@ -534,11 +534,13 @@ mostrar('final');
 function reset(){location.reload();}
 
 function admin(){
-if(senha.value==="admin123"){
-dadosDash();
-mostrar('dash');
-}else alert('Senha errada');
-}
+  if(senha.value==="admin123"){
+    mostrar('dash');   // ✅ PRIMEIRO mostra a tela
+    dadosDash();       // ✅ DEPOIS preenche os dados
+  } else {
+    alert('Senha errada');
+  }
+``
 
 function dadosDash(){
 
